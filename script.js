@@ -1,5 +1,5 @@
-const myObstacles = []; //store all created objects
-
+const myGems = []; //store all created objects
+const imageArray = ["1.gif", "2.gif", "3.gif", "4.gif"];
 //when the button is clicked, play music
 document.getElementById("startPlaying")
 .addEventListener("click", function () {
@@ -16,14 +16,15 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
-    this.canvas.width = 400;
-    this.canvas.height = 400;
+    this.canvas.width = 600;
+    this.canvas.height = 600;
     this.canvas.setAttribute('style', 'background-color:black')
     this.context = this.canvas.getContext("2d");
     //insert canvas inside of the bdy as its first child
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     //call update game area every 20 seconds
     this.interval = setInterval(updateGameArea, 20);
+    createRandomGems(imageArray);
   },
   music: function () {
     var audio = new Audio('theme_song.mp3');
@@ -55,6 +56,16 @@ class Component {
 
     this.speedX = 0;
     this.speedY = 0;
+
+    // Load the image
+    let img = new Image();
+    img.addEventListener('load', () => {
+      // Once image loaded => draw
+      this.img = img;
+      img.src = '/anubi.png';
+      this.draw();
+    });
+    
   }
 
   newPos() {
@@ -66,8 +77,8 @@ class Component {
   update() {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillStyle = this.color;
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -85,7 +96,7 @@ class Component {
 }
 
 //create player from component class
-const player = new Component(20, 20, "red", 180, 380);
+const player = new Component(50, 100, "red", 150, 300);
 
 //this gets called every 20 milliseconds
 function updateGameArea() {
@@ -130,4 +141,20 @@ document.addEventListener("keyup", (e) => {
   player.speedY = 0;
 });
 
-
+function createRandomGems (imageArray) {
+  //depending on the level define number of gems
+  //TODO: change this as hardcoded now -totalgems number depending on theme
+  let gemsNumber = 2;
+  //get random images from image list/array
+  let randomGems = imageArray.map(image => {
+    return imageArray[Math.floor(Math.random() * imageArray.length)]
+  });
+  //get random x and y withing canvas width and height
+  debugger;
+  
+  let randomX =  Math.floor(Math.random() * (max - min + 1)) + min;
+  let randomY =  Math.floor(Math.random() * (max - min + 1)) + min;
+  let randomStart;
+  //set random starting pont
+  //handle movement towards target
+}
