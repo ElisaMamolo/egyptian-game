@@ -1,22 +1,26 @@
 const myObstacles = []; //store all created obstacles
 
+//when the button is clicked, play music
+document.getElementById("startPlaying")
+.addEventListener("click", function () {
+  var context = new AudioContext();
+  //myGameArea.music();
+  document.getElementById("startPlaying").remove();
+  //start game area and create canvas when button is clicked
+  myGameArea.start();
+});
+
 const myGameArea = {
-  canvas: document.getElementById("canvas"),
+  canvas: document.createElement("canvas"),
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
-    this.canvas.width = 200;
-    this.canvas.height = 200;
+    this.canvas.width = 400;
+    this.canvas.height = 400;
+    this.canvas.setAttribute('style', 'background-color:black')
     this.context = this.canvas.getContext("2d");
     //insert canvas inside of the bdy as its first child
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    document
-      .getElementById("startPlaying")
-      .addEventListener("click", function () {
-        var context = new AudioContext();
-        //myGameArea.music();
-        document.getElementById("startPlaying").remove();
-      });
     //call update game area every 20 seconds
     //this.interval = setInterval(updateGameArea, 20);
   },
@@ -39,11 +43,13 @@ const myGameArea = {
   },
   
 };
+
+
 //this gets called every 20 milliseconds
 function updateGameArea() {  
 }
 
-myGameArea.start();
+
 
 
 
