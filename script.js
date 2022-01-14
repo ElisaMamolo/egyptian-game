@@ -1,6 +1,5 @@
 const gemsArray = ["/img/1.gif", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
-const defendersArray = [];
-
+let myItems = [];
 //when the button is clicked, play music
 document.getElementById("startPlaying")
 .addEventListener("click", function () {
@@ -25,7 +24,7 @@ const myGameArea = {
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     //call update game area every 20 seconds
     this.interval = setInterval(updateGameArea, 20);
-    createRandomElements(gemsArray, defendersArray);
+    createRandomElements(gemsArray);
   },
   music: function () {
     var audio = new Audio('theme_song.mp3');
@@ -78,8 +77,8 @@ class Component {
   update() {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
-    //ctx.fillStyle = this.color;
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -109,7 +108,7 @@ function updateGameArea() {
   //update component
   player.update();
   //update obstacle
-  this.updateObstacles();
+  //this.updateObstacles();
   //check if game over
   
   // update and draw the score
@@ -146,37 +145,38 @@ document.addEventListener("keyup", (e) => {
 //TODO: this can be reused also for generating enemies
 //do some refactoring for it later
 //arrayEnemies
-function createRandomElements (gems, defenders) {
+function createRandomElements (gems) {
   //depending on the level define number of gems
-  //TODO: change this as hardcoded now -totalgems number depending on theme
+  //TODO: change this as hardcoded now -total gems number depending on theme
+
   let gemsNumber = 2;
-  let defendersNumber = 1;
+  let torchNumber = 3;
 
   //get random images from image list/array
   let randomGems = gems.map(image => {
     return gems[Math.floor(Math.random() * gems.length)]
   });
 
-  let randomDefenders = defenders.map(image => {
-    return defenders[Math.floor(Math.random() * defenders.length)]
-  });
-
   //get first n number of gems depending on total dictated by level
   let randomGemsSliced = randomGems.slice(0, gemsNumber);
- 
-   //get first n number of defenders depending on total dictated by level
-   let  randomDefendersSliced =  randomDefenders.slice(0, gemsNumber);
   
-   //get random x and y withing canvas width and height
-  debugger;
+  //get random x and y withing canvas width and height
+  let randomX =  Math.floor(Math.random() * (myGameArea.canvas.width - 0 + 1)) + 0;
+  let randomY =  Math.floor(Math.random() * (myGameArea.canvas.height - 0 + 1)) + 0;
   
-  let randomX =  Math.floor(Math.random() * (max - min + 1)) + min;
-  let randomY =  Math.floor(Math.random() * (max - min + 1)) + min;
-  let randomStart;
   //generate a new instance of component with newly created random values
   //generate gems and defenders
-  //use foeerach/map
-  const player = new Component(50, 100, "red", 150, 300);
+  
+  let generateGems = randomGemsSliced.map(item => {
+    myItems.push(
+      new Component(20, 20, randomGemsSliced[item], randomX, randomY)
+    );
+    
+  });
+
+  const ctx = myGameArea.context;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
   //handle movement towards target
 }
