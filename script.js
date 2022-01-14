@@ -16,8 +16,8 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
-    this.canvas.width = 600;
-    this.canvas.height = 600;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.canvas.setAttribute('style', 'background-color:black')
     this.context = this.canvas.getContext("2d");
     //insert canvas inside of the bdy as its first child
