@@ -1,13 +1,12 @@
 const gemsArray = ["/img/1.gif", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 let myItems = [];
+
 //when the button is clicked, play music
-document.getElementById("startPlaying")
-.addEventListener("click", function () {
+document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
   //myGameArea.music();
   document.getElementById("startPlaying").remove();
   //start game area and create canvas when button is clicked
-  
   myGameArea.start();
 });
 
@@ -16,18 +15,45 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
+    let context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    this.canvas.setAttribute('style', 'background-color:black')
-    this.context = this.canvas.getContext("2d");
-    //insert canvas inside torch div
-    document.getElementById("torch").appendChild(this.canvas);
+    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    this.canvas.addEventListener("mousemove", function (event) {
+      x = event.clientX;
+      y = event.clientY;
+    radius = 50;
+    let context = document.getElementsByTagName("canvas")[0].getContext("2d");
+    // first reset the gCO
+    context.globalCompositeOperation = "source-over";
+    // Paint the canvas black.
+    context.fillStyle = "#000";
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+    
+    context.beginPath();
+    radialGradient = context.createRadialGradient(x, y, 1, x, y, radius);
+    radialGradient.addColorStop(0, "rgba(255,255,255,1)");
+    radialGradient.addColorStop(1, "rgba(0,0,0,0)");
+    
+    context.globalCompositeOperation = "destination-out";
+    
+    context.fillStyle = radialGradient;
+    context.arc(x, y, radius, 0, Math.PI * 2, false);
+    context.fill();
+    context.closePath();
+    });
+    // Paint the canvas black.
+    context.fillStyle = "#000";
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     //call update game area every 20 seconds
-    this.interval = setInterval(updateGameArea, 20);
+    //this.interval = setInterval(updateGameArea, 20);
     createRandomElements(gemsArray);
+    
   },
   music: function () {
-    var audio = new Audio('theme_song.mp3');
+    var audio = new Audio("theme_song.mp3");
     audio.play();
   },
   score: function () {
@@ -42,8 +68,9 @@ const myGameArea = {
   },
   stop: function () {
     clearInterval(this.interval);
-  }
+  },
 };
+
 
 //create components, for our player element, and for the obstacles
 class Component {
@@ -59,13 +86,12 @@ class Component {
 
     // Load the image
     let img = new Image();
-    img.addEventListener('load', () => {
+    img.addEventListener("load", () => {
       // Once image loaded => draw
       this.img = img;
-      img.src = '/img/anubi.png';
+      img.src = "/img/anubi.png";
       this.draw();
     });
-    
   }
 
   newPos() {
@@ -115,6 +141,7 @@ function updateGameArea() {
   myGameArea.score();
 }
 
+
 //update speed when arrows are clicked
 document.addEventListener("keydown", (e) => {
   switch (e.keyCode) {
@@ -141,11 +168,10 @@ document.addEventListener("keyup", (e) => {
   player.speedY = 0;
 });
 
-
 //TODO: this can be reused also for generating enemies
 //do some refactoring for it later
 //arrayEnemies
-function createRandomElements (gems) {
+function createRandomElements(gems) {
   //depending on the level define number of gems
   //TODO: change this as hardcoded now -total gems number depending on theme
 
@@ -153,30 +179,27 @@ function createRandomElements (gems) {
   let torchNumber = 3;
 
   //get random images from image list/array
-  let randomGems = gems.map(image => {
-    return gems[Math.floor(Math.random() * gems.length)]
+  let randomGems = gems.map((image) => {
+    return gems[Math.floor(Math.random() * gems.length)];
   });
 
   //get first n number of gems depending on total dictated by level
   let randomGemsSliced = randomGems.slice(0, gemsNumber);
-  
+
   //get random x and y withing canvas width and height
-  let randomX =  Math.floor(Math.random() * (myGameArea.canvas.width - 0 + 1)) + 0;
-  let randomY =  Math.floor(Math.random() * (myGameArea.canvas.height - 0 + 1)) + 0;
-  
+  let randomX = Math.floor(Math.random() * (window.width - 0 + 1)) + 0;
+  let randomY = Math.floor(Math.random() * (window.height - 0 + 1)) + 0;
+
   //generate a new instance of component with newly created random values
   //generate gems and defenders
-  
-  let generateGems = randomGemsSliced.map(item => {
+
+  let generateGems = randomGemsSliced.map((item) => {
     myItems.push(
       new Component(20, 20, randomGemsSliced[item], randomX, randomY)
     );
-    
   });
 
-  const ctx = myGameArea.context;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-    //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-
-  //handle movement towards target
 }
+
+
+
