@@ -1,4 +1,4 @@
-const myObstacles = []; //store all created obstacles
+const myObstacles = []; //store all created objects
 
 //when the button is clicked, play music
 document.getElementById("startPlaying")
@@ -82,17 +82,6 @@ class Component {
   bottom() {
     return this.y + this.height;
   }
-
-  crashWith(obstacle) {
-    //method for class component, we pass the object obstacle
-    //returns a boolean if we crashed or not
-    return !(
-      this.bottom() < obstacle.top() ||
-      this.top() > obstacle.bottom() ||
-      this.right() < obstacle.left() ||
-      this.left() > obstacle.right()
-    );
-  }
 }
 
 //create player from component class
@@ -110,7 +99,7 @@ function updateGameArea() {
   //update obstacle
   this.updateObstacles();
   //check if game over
-  checkGameOver();
+  
   // update and draw the score
   myGameArea.score();
 }
