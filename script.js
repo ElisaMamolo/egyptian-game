@@ -20,8 +20,8 @@ const myGameArea = {
     this.canvas.height = window.innerHeight;
     this.canvas.setAttribute('style', 'background-color:black')
     this.context = this.canvas.getContext("2d");
-    //insert canvas inside of the bdy as its first child
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    //insert canvas inside torch div
+    document.getElementById("torch").appendChild(this.canvas);
     //call update game area every 20 seconds
     this.interval = setInterval(updateGameArea, 20);
     createRandomElements(gemsArray);
