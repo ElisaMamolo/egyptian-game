@@ -30,7 +30,7 @@ const myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.interval = setInterval(updateGameArea, 20);
+    this.interval = setInterval(updateGameArea, 10);
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -287,10 +287,6 @@ document.addEventListener("keydown", function (event) {
       }
     }
 
-    ctx.font = "30px Comic Sans MS";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
   }
 
   setInterval(draw, 33);
