@@ -31,6 +31,8 @@ const myGameArea = {
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.interval = setInterval(updateGameArea, 10);
+    //TODO: change the timeout dynamically based on level
+    let scoreInterval = setTimeout(gameOver, 2000);
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -38,7 +40,8 @@ const myGameArea = {
   },
   score: function () {
     let points = Math.floor(this.frames / 5);
-    this.context.font = "18px serif";
+    myGameArea.points = points;
+    this.context.font = "25px serif";
     this.context.fillStyle = "white";
     this.context.fillText(`Score: ${points}`, 350, 50);
   },
@@ -89,8 +92,8 @@ function updateGameArea() {
   //update x and y with the speed
   player.newPos();
 
-  //update obstacle
-
+  //update frames
+  myGameArea.frames += 1;
   //check if game over
   //check if game over
   checkGameOver();
@@ -157,6 +160,8 @@ function createRandomElements(gems) {
   });
 }
 
+
+
 function checkGameOver() {
   /*
   const crashed = myObstacles.some(function (obstacle) {
@@ -167,6 +172,11 @@ function checkGameOver() {
     myGameArea.stop();
   }
   */
+}
+
+function gameOver () {
+  myGameArea.stop();
+  alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
 }
 
 //create player from component class
@@ -299,3 +309,5 @@ document.addEventListener("keydown", function (event) {
     });
   });
 });
+
+
