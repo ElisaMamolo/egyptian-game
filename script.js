@@ -22,47 +22,44 @@ const myGameArea = {
     document.body.appendChild(this.canvas);
     this.interval = setInterval(updateGameArea, 80);
     // Paint the canvas black.
-    this.context.fillStyle = '#000';
+    this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     // On Mousemove, create "Flashlight" around the mouse, to see through the canvas
-document.addEventListener("keydown", function (event) {
-  x = player.x;
-  y = player.y;
-  let radius = 50;
-  this.context = canvas.getContext("2d");
+    document.addEventListener("keydown", function (event) {
+      x = player.x;
+      y = player.y;
+      let radius = 50;
+      this.context = canvas.getContext("2d");
 
-  // first reset the gCO
-  this.context.globalCompositeOperation = 'source-over';
-  // Paint the canvas black.
-  this.context.fillStyle = '#000';
-  this.context.clearRect(0, 0, canvas.width, canvas.height);
-  this.context.fillRect(0, 0, canvas.width, canvas.height);
+      // first reset the gCO
+      this.context.globalCompositeOperation = "source-over";
+      // Paint the canvas black.
+      this.context.fillStyle = "#000";
+      this.context.clearRect(0, 0, canvas.width, canvas.height);
+      this.context.fillRect(0, 0, canvas.width, canvas.height);
 
-  this.context.beginPath();
-  radialGradient = this.context.createRadialGradient(x, y, 1, x, y, radius);
-  radialGradient.addColorStop(0, 'rgba(255,255,255,1)');
-  radialGradient.addColorStop(1, 'rgba(0,0,0,0)');
+      this.context.beginPath();
+      radialGradient = this.context.createRadialGradient(x, y, 1, x, y, radius);
+      radialGradient.addColorStop(0, "rgba(255,255,255,1)");
+      radialGradient.addColorStop(1, "rgba(0,0,0,0)");
 
-  this.context.globalCompositeOperation = "destination-out";
+      this.context.globalCompositeOperation = "destination-out";
 
-  this.context.fillStyle = radialGradient;
-  this.context.arc(x, y, radius, 0, Math.PI*2, false);
-  this.context.fill();
-  this.context.closePath();
-});
+      this.context.fillStyle = radialGradient;
+      this.context.arc(x, y, radius, 0, Math.PI * 2, false);
+      this.context.fill();
+      this.context.closePath();
+    });
 
-
-   
-
-  /*
+    /*
     // Paint the canvas black.
     context.fillStyle = "white";
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
   */
     //createRandomElements(gemsArray);
- /*   
+    /*   
     document.addEventListener("keydown", function (event) {
       let ctx = canvas.getContext("2d");
       let W = window.innerWidth, H = window.innerHeight;
@@ -201,8 +198,7 @@ document.addEventListener("keydown", function (event) {
       }
     
       setInterval(draw, 33);
-  */  
-
+  */
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -222,8 +218,6 @@ document.addEventListener("keydown", function (event) {
     clearInterval(this.interval);
   },
 };
-
-
 
 //create components, for our player element, and for the obstacles
 class Component {
@@ -273,7 +267,6 @@ class Component {
   }
 }
 
-
 //this gets called every 20 milliseconds
 function updateGameArea() {
   //give new position to the player
@@ -282,13 +275,12 @@ function updateGameArea() {
   //update component
   player.update();
   //update obstacle
-  
+
   //check if game over
-  
+
   // update and draw the score
   myGameArea.score();
 }
-
 
 //update speed when arrows are clicked
 document.addEventListener("keydown", (e) => {
@@ -342,16 +334,12 @@ function createRandomElements(gems) {
   //generate gems and defenders
 
   let generateGems = randomGemsSliced.map((item) => {
-    myItems.push(
+    myItems
+      .push
       //new Component(20, 20, randomGemsSliced[item], randomX, randomY)
-    );
+      ();
   });
-
 }
-
 
 //create player from component class
 const player = new Component(20, 20, 180, 380);
-
-
-
