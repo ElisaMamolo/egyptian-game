@@ -15,14 +15,19 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
+    this.context = this.canvas.getContext("2d");
+    //this needs to be cleaned out
     let context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    
+    /*
     this.canvas.addEventListener("mousemove", function (event) {
       x = event.clientX;
       y = event.clientY;
-    radius = 50;
+      //circle size
+    radius = 250;
     let context = document.getElementsByTagName("canvas")[0].getContext("2d");
     // first reset the gCO
     context.globalCompositeOperation = "source-over";
@@ -43,14 +48,17 @@ const myGameArea = {
     context.fill();
     context.closePath();
     });
+    */
+    
     // Paint the canvas black.
-    context.fillStyle = "#000";
+    context.fillStyle = "white";
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-    //call update game area every 20 seconds
-    //this.interval = setInterval(updateGameArea, 20);
-    createRandomElements(gemsArray);
+
+    //createRandomElements(gemsArray);
     
+    //call update game area every 20 seconds
+    this.interval = setInterval(updateGameArea, 20);
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -59,7 +67,7 @@ const myGameArea = {
   score: function () {
     const points = Math.floor(this.frames / 5);
     this.context.font = "18px serif";
-    this.context.fillStyle = "white";
+    this.context.fillStyle = "black";
     this.context.fillText(`Score: ${points}`, 350, 50);
   },
   clear: function () {
@@ -103,6 +111,7 @@ class Component {
   update() {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
     //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
@@ -121,8 +130,6 @@ class Component {
   }
 }
 
-//create player from component class
-const player = new Component(50, 100, "red", 150, 300);
 
 //this gets called every 20 milliseconds
 function updateGameArea() {
@@ -134,7 +141,7 @@ function updateGameArea() {
   //update component
   player.update();
   //update obstacle
-  //this.updateObstacles();
+  
   //check if game over
   
   // update and draw the score
@@ -195,11 +202,13 @@ function createRandomElements(gems) {
 
   let generateGems = randomGemsSliced.map((item) => {
     myItems.push(
-      new Component(20, 20, randomGemsSliced[item], randomX, randomY)
+      //new Component(20, 20, randomGemsSliced[item], randomX, randomY)
     );
   });
 
 }
 
 
+//create player from component class
+const player = new Component(20, 20, "red", 180, 380);
 
