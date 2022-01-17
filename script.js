@@ -29,7 +29,6 @@ const myGameArea = {
     this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    // On Mousemove, create "Flashlight" around the mouse, to see through the canvas
     
     this.interval = setInterval(updateGameArea, 20);
   },
@@ -62,22 +61,12 @@ class Component {
 
     this.speedX = 0;
     this.speedY = 0;
-
-    
   }
 
   newPos() {
     //give player a new position based on the speed
     this.x += this.speedX;
     this.y += this.speedY;
-  }
-
-  update() {
-    //take x,y, width and heigh and create whatever is in x and y
-    const ctx = myGameArea.context;
-   
-    //ctx.fillRect(this.x, this.y, this.width, this.height);
-    //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -99,8 +88,7 @@ function updateGameArea() {
   //give new position to the player
   //update x and y with the speed
   player.newPos();
-  //update component
-  player.update();
+
   //update obstacle
 
   //check if game over
@@ -114,16 +102,16 @@ function updateGameArea() {
 document.addEventListener("keydown", (e) => {
   switch (e.keyCode) {
     case 38: // up arrow
-      player.speedY -= 3;
+      player.speedY -= 15;
       break;
     case 40: // down arrow
-      player.speedY += 3;
+      player.speedY += 15;
       break;
     case 37: // left arrow
-      player.speedX -= 3;
+      player.speedX -= 15;
       break;
     case 39: // right arrow
-      player.speedX += 3;
+      player.speedX += 15;
       break;
   }
 });
