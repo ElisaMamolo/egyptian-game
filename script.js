@@ -15,17 +15,46 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   start: function () {
-    let divHolder = document.createElement("div");
-    divHolder.classList.add("torch");
-    divHolder.setAttribute("id", "torchid");
-    this.canvas.setAttribute("onclick", "onclickTorch()");
     this.canvas.setAttribute("id", "canvas");
     this.context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    document.body.appendChild(divHolder);
-    document.body.childNodes[8].appendChild(this.canvas);
-    this.interval = setInterval(updateGameArea, 20);
+    document.body.appendChild(this.canvas);
+    this.interval = setInterval(updateGameArea, 80);
+    // Paint the canvas black.
+    this.context.fillStyle = '#000';
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // On Mousemove, create "Flashlight" around the mouse, to see through the canvas
+document.addEventListener("keydown", function (event) {
+  x = player.x;
+  y = player.y;
+  let radius = 50;
+  this.context = canvas.getContext("2d");
+
+  // first reset the gCO
+  this.context.globalCompositeOperation = 'source-over';
+  // Paint the canvas black.
+  this.context.fillStyle = '#000';
+  this.context.clearRect(0, 0, canvas.width, canvas.height);
+  this.context.fillRect(0, 0, canvas.width, canvas.height);
+
+  this.context.beginPath();
+  radialGradient = this.context.createRadialGradient(x, y, 1, x, y, radius);
+  radialGradient.addColorStop(0, 'rgba(255,255,255,1)');
+  radialGradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+  this.context.globalCompositeOperation = "destination-out";
+
+  this.context.fillStyle = radialGradient;
+  this.context.arc(x, y, radius, 0, Math.PI*2, false);
+  this.context.fill();
+  this.context.closePath();
+});
+
+
+   
+
   /*
     // Paint the canvas black.
     context.fillStyle = "white";
@@ -33,7 +62,7 @@ const myGameArea = {
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
   */
     //createRandomElements(gemsArray);
-    
+ /*   
     document.addEventListener("keydown", function (event) {
       let ctx = canvas.getContext("2d");
       let W = window.innerWidth, H = window.innerHeight;
@@ -172,37 +201,8 @@ const myGameArea = {
       }
     
       setInterval(draw, 33);
-    
-    
-    /*
-    this.canvas.addEventListener("mousemove", function (event) {
-      x = event.clientX;
-      y = event.clientY;
-      //circle size
-    radius = 250;
-    let context = document.getElementsByTagName("canvas")[0].getContext("2d");
-    // first reset the gCO
-    context.globalCompositeOperation = "source-over";
-    // Paint the canvas black.
-    context.fillStyle = "#000";
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-    
-    context.beginPath();
-    radialGradient = context.createRadialGradient(x, y, 1, x, y, radius);
-    radialGradient.addColorStop(0, "rgba(255,255,255,1)");
-    radialGradient.addColorStop(1, "rgba(0,0,0,0)");
-    
-    context.globalCompositeOperation = "destination-out";
-    
-    context.fillStyle = radialGradient;
-    context.arc(x, y, radius, 0, Math.PI * 2, false);
-    context.fill();
-    context.closePath();
-    });
-    */
-    });
-    
+  */  
+
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -227,10 +227,9 @@ const myGameArea = {
 
 //create components, for our player element, and for the obstacles
 class Component {
-  constructor(width, height, color, x, y) {
+  constructor(width, height, x, y) {
     this.width = width;
     this.height = height;
-    this.color = color;
     this.x = x;
     this.y = y;
 
@@ -256,8 +255,7 @@ class Component {
   update() {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
     //ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
@@ -278,8 +276,6 @@ class Component {
 
 //this gets called every 20 milliseconds
 function updateGameArea() {
-  //clear game area, the canvas
-  myGameArea.clear();
   //give new position to the player
   //update x and y with the speed
   player.newPos();
@@ -354,13 +350,8 @@ function createRandomElements(gems) {
 }
 
 
-function onclickTorch(){
-  document.getElementById("torchid").setAttribute("class", "torch canvas after-click");
-}
-
-
 //create player from component class
-const player = new Component(20, 20, "red", 180, 380);
+const player = new Component(20, 20, 180, 380);
 
 
 
