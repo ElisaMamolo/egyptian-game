@@ -24,12 +24,12 @@ const myGameArea = {
 
     document.body.appendChild(divElement);
     divElement.appendChild(this.canvas);
-    
+
     // Paint the canvas black.
     this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    
+
     this.interval = setInterval(updateGameArea, 20);
   },
   music: function () {
@@ -167,131 +167,121 @@ function checkGameOver() {
     myGameArea.stop();
   }
   */
- 
 }
 
 //create player from component class
 const player = new Component(20, 20, 500, 500);
 
-
 document.addEventListener("keydown", function (event) {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-  
+
   //Make the canvas occupy the full page
-  var W = window.innerWidth, H = window.innerHeight;
+  var W = window.innerWidth,
+    H = window.innerHeight;
   canvas.width = W;
   canvas.height = H;
-  
+
   var particles = [];
   var mouse = {};
-  
+
   //Lets create some particles now
   var particle_count = 100;
-  for(var i = 0; i < particle_count; i++)
-  {
+  for (var i = 0; i < particle_count; i++) {
     particles.push(new particle());
   }
-  
+
   //finally some mouse tracking
-  canvas.addEventListener('keydown', trackPlayer);
-  
+  canvas.addEventListener("keydown", trackPlayer);
+
   function trackPlayer(e) {
-    //since the canvas = full page the position of the mouse 
+    //since the canvas = full page the position of the mouse
     //relative to the document will suffice
     mouse.x = player.x;
     mouse.y = player.y;
   }
-  
-  
+
   function particle() {
     //speed, life, location, life, colors
-    //speed.x range = -2.5 to 2.5 
+    //speed.x range = -2.5 to 2.5
     //speed.y range = -15 to -5 to make it move upwards
     //lets change the Y speed to make it look like a flame
     //this speed is for styling the flame
-    this.speed = {x: -2.5+Math.random()*5, y: -15+Math.random()*10};
+    this.speed = { x: -2.5 + Math.random() * 5, y: -15 + Math.random() * 10 };
     //location = mouse coordinates
     //Now the flame follows the player coordinates
-    if(player.x && player.y)
-    {
-      this.location = {x: player.x, y: player.y};
-    }
-    else
-    {
-      this.location = {x: W/2, y: H/2};
+    if (player.x && player.y) {
+      this.location = { x: player.x, y: player.y };
+    } else {
+      this.location = { x: W / 2, y: H / 2 };
     }
     //radius range = 10-30
-    this.radius = 10+Math.random()*20;
+    this.radius = 10 + Math.random() * 20;
     //life range = 20-30
-    this.life = 20+Math.random()*10;
+    this.life = 20 + Math.random() * 10;
     this.remaining_life = this.life;
     //colors
     this.r = 74;
     this.g = 77;
     this.b = 84;
   }
-  
-  
+
   function draw() {
     //Painting the canvas black
     //Time for lighting magic
     //particles are painted with "lighter"
-    //In the next frame the background is painted normally without blending to the 
+    //In the next frame the background is painted normally without blending to the
     //previous framevar im = new Image();
-    
-  ctx.globalCompositeOperation = "source-over";
-//		var im = new Image();
-//		im.src = "./background.jpg";
-//		im.onload = function (){
-//		ctx.drawImage(im, W, H);
-//		}
+
+    ctx.globalCompositeOperation = "source-over";
 
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, W, H);	
-    
-//		var src    = "../images/background.jpg";
-//	    var img    = new Image();
-//	    img.src    = src;
-//	    $(img).load(function() {
-//			var pattern = ctx.createPattern(img, 'repeat');
-//			ctx.fillStyle = pattern;
-//			ctx.fillRect(0, 0, W, H);
-//		  });
-
+    ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = "lighter";
-    
-    for(var i = 0; i < particles.length; i++)
-    {
+
+    for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
       ctx.beginPath();
       //changing opacity according to the life.
       //opacity goes to 0 at the end of life of a particle
-      p.opacity = Math.round(p.remaining_life/p.life*100)/100
+      p.opacity = Math.round((p.remaining_life / p.life) * 100) / 100;
       //a gradient instead of white fill
-      var gradient = ctx.createRadialGradient(p.location.x, p.location.y, 0, p.location.x, p.location.y, p.radius);
-//			p.r = 128;
-//			p.g = 34;
-//			p.b = 34;
+      var gradient = ctx.createRadialGradient(
+        p.location.x,
+        p.location.y,
+        0,
+        p.location.x,
+        p.location.y,
+        p.radius
+      );
+
       p.r = 255;
       p.g = 69;
       p.b = 0;
-      gradient.addColorStop(0, "rgba("+p.r+", "+p.g+", "+p.b+", "+p.opacity+")");
-      gradient.addColorStop(0.2, "rgba("+p.r+", "+p.g+", "+p.b+", "+p.opacity+")");
-      gradient.addColorStop(1, "rgba("+p.r+", "+p.g+", "+p.b+", 0)");
+      gradient.addColorStop(
+        0,
+        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", " + p.opacity + ")"
+      );
+      gradient.addColorStop(
+        0.2,
+        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", " + p.opacity + ")"
+      );
+      gradient.addColorStop(
+        1,
+        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", 0)"
+      );
       ctx.fillStyle = gradient;
-      ctx.arc(p.location.x, p.location.y, p.radius, Math.PI*2, false);
+      ctx.arc(p.location.x, p.location.y, p.radius, Math.PI * 2, false);
       ctx.fill();
-      
+
       //lets move the particles
       p.remaining_life--;
       p.radius--;
       p.location.x += p.speed.x;
       p.location.y += p.speed.y;
-      
+
       //regenerate particles
-      if(p.remaining_life < 0 || p.radius < 0)
-      {
+      if (p.remaining_life < 0 || p.radius < 0) {
         //a brand new particle replacing the dead one
         particles[i] = new particle();
       }
@@ -300,17 +290,16 @@ document.addEventListener("keydown", function (event) {
     ctx.font = "30px Comic Sans MS";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText("Hello World", canvas.width/2, canvas.height/2); 
+    ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
   }
-  
+
   setInterval(draw, 33);
 
-/****************************TORCH LIGHT*********************************/
-  
+  /****************************TORCH LIGHT*********************************/
+
   $(function () {
     $(".torch").click(function () {
-        $(".torch").addClass(".torch .after-click");
+      $(".torch").addClass(".torch .after-click");
     });
-});
-
+  });
 });
