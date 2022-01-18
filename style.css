@@ -30,3 +30,15 @@ background: radial-gradient(
 .torch .after-click:before{
 background: transparent;
 }
+
+
+/*****styling visulas****/
+.container-fluid {
+  background-image:url('/img/myBackground.gif'); 
+  background-repeat:repeat;
+  height: 100vh;
+}
+
+.title {
+  
+}
