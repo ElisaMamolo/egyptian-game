@@ -75,15 +75,11 @@ const myGameArea = {
     audio.play();
   },
   score: function () {
-    //let points = Math.floor(this.frames / 5);
-
-    //myGameArea.points = 0;
-    this.context.font = "25px serif";
+    this.context.font = "20px serif";
     this.context.fillStyle = "black";
     this.context.fillText(`Level: ${myGameArea.level}`, 190, 50);
     this.context.fillText(`Score: ${myGameArea.points}`, 350, 50);
     this.context.fillText(`Time left: ${myGameArea.time} seconds`, 500, 50);
-    
   },
   clear: function () {
     //get context and clear canvas
@@ -155,6 +151,10 @@ class Component {
         myGameArea.points += myItems[i].value[0];
         //remove item from array and canvas
         myItems.splice(i, 1);
+        //add time for each grabbed gem
+        if(myGameArea.level > 1) {
+          timeleft += 4; 
+        }
       }
     }
     return crash;
@@ -241,7 +241,6 @@ function createRandomElements(gems) {
     //This condition will determine every how many update we create new obstacles.
     //We set every 120 updates, that means 2.4 seconds,
     //because we call the updateGameArea() function every 20 milliseconds.
-    let torchNumber = 3;
 
     //get random images from image list/array
     let randomGems = gems.map((image) => {
