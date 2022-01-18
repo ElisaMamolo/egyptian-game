@@ -20,7 +20,7 @@ const myGameArea = {
   start: function () {
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
-    divElement.setAttribute("style", "canvas");
+    divElement.setAttribute("style", "canvas d-flex flex-column align-items-center justify-content-center");
     this.context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
