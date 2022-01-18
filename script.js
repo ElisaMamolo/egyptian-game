@@ -3,7 +3,6 @@ const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let myItems = [];
 let valueOfGem;
 
-
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
@@ -20,7 +19,10 @@ const myGameArea = {
   start: function () {
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
-    divElement.setAttribute("style", "canvas d-flex flex-column align-items-center justify-content-center");
+    divElement.setAttribute(
+      "style",
+      "canvas d-flex flex-column align-items-center justify-content-center"
+    );
     this.context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -44,7 +46,7 @@ const myGameArea = {
   },
   score: function () {
     //let points = Math.floor(this.frames / 5);
-    
+
     //myGameArea.points = 0;
     this.context.font = "25px serif";
     this.context.fillStyle = "black";
@@ -61,7 +63,7 @@ const myGameArea = {
 
 //create components, for our player element, and for the obstacles
 class Component {
-  constructor(width, height, color,  x, y, value) {
+  constructor(width, height, color, x, y, value) {
     this.width = width;
     this.height = height;
     this.x = x;
@@ -80,40 +82,37 @@ class Component {
 
   crashWith(myItems) {
     var myleft = this.x;
-    var myright = this.x + (this.width);
+    var myright = this.x + this.width;
     var mytop = this.y;
-    var mybottom = this.y + (this.height);
+    var mybottom = this.y + this.height;
 
     for (let i = 0; i < myItems.length; i++) {
-      
-        var otherleft = myItems[i].x;
-        var otherright = myItems[i].x + (myItems[i].width);
-        var othertop = myItems[i].y;
-        var otherbottom = myItems[i].y + (myItems[i].height);
-        var crash = true;
-        
-        //context.clearRect(20, 20, element.x, element.y); 
-        
-        
-      if ((mybottom < othertop) ||
-        (mytop > otherbottom) ||
-        (myright < otherleft) ||
-        (myleft > otherright)) {
-          crash = false;
-        }
+      var otherleft = myItems[i].x;
+      var otherright = myItems[i].x + myItems[i].width;
+      var othertop = myItems[i].y;
+      var otherbottom = myItems[i].y + myItems[i].height;
+      var crash = true;
+
+      //context.clearRect(20, 20, element.x, element.y);
+
+      if (
+        mybottom < othertop ||
+        mytop > otherbottom ||
+        myright < otherleft ||
+        myleft > otherright
+      ) {
+        crash = false;
+      }
       if (crash) {
         //update score on each crash
-        
+
         myGameArea.points += myItems[i].value[0];
         //remove item from array and canvas
         myItems.splice(i, 1);
-      } 
       }
-      return crash;
     }
-    
-    
-  
+    return crash;
+  }
 
   update() {
     //take x,y, width and heigh and create whatever is in x and y
@@ -147,7 +146,7 @@ function updateGameArea() {
   //give new position to the player
   //update x and y with the speed
   player.newPos();
-  
+
   player.update();
 
   this.createRandomElements(gemsArray);
@@ -155,7 +154,6 @@ function updateGameArea() {
   myGameArea.frames += 1;
   // update and draw the score
   myGameArea.score();
-  
 }
 
 //update speed when arrows are clicked
@@ -196,38 +194,39 @@ function createRandomElements(gems) {
     //We set every 120 updates, that means 2.4 seconds,
     //because we call the updateGameArea() function every 20 milliseconds.
 
-  //depending on the level define number of gems
-  //TODO: change this as hardcoded now -total gems number depending on theme
+    //depending on the level define number of gems
+    //TODO: change this as hardcoded now -total gems number depending on theme
 
-  let gemsNumber = 2;
-  let torchNumber = 3;
+    let gemsNumber = 2;
+    let torchNumber = 3;
 
-  //get random images from image list/array
-  let randomGems = gems.map((image) => {
-    return gems[Math.floor(Math.random() * gems.length)];
-  });
+    //get random images from image list/array
+    let randomGems = gems.map((image) => {
+      return gems[Math.floor(Math.random() * gems.length)];
+    });
 
-  let randomValue = gemsValues.map((value) => {
-    return gemsValues[Math.floor(Math.random() * gemsValues.length)];
-  });
-  let randomGemValue = randomValue.slice(0, 1);
-  //get first n number of gems depending on total dictated by level
-  let randomGemsSliced = randomGems.slice(0, gemsNumber);
+    let randomValue = gemsValues.map((value) => {
+      return gemsValues[Math.floor(Math.random() * gemsValues.length)];
+    });
+    let randomGemValue = randomValue.slice(0, 1);
+    //get first n number of gems depending on total dictated by level
+    let randomGemsSliced = randomGems.slice(0, gemsNumber);
 
-  //generate a new instance of component with newly created random values
+    //generate a new instance of component with newly created random values
 
-  let generateGems = randomGemsSliced.map((item) => {
-     //get random x and y withing canvas width and height
-    let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
-    let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
-    //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
-    return myItems.push(new Component(20, 20, "blue", randomX, randomY, randomGemValue));
-  });
+    let generateGems = randomGemsSliced.map((item) => {
+      //get random x and y withing canvas width and height
+      let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
+      let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
+      //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
+      return myItems.push(
+        new Component(20, 20, "blue", randomX, randomY, randomGemValue)
+      );
+    });
+  }
 }
-}
 
-
-function gameOver () {
+function gameOver() {
   myGameArea.stop();
   alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
 }
