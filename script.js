@@ -1,5 +1,7 @@
 const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
+let bestScores = [];
+
 let myItems = [];
 let valueOfGem;
 
@@ -7,20 +9,9 @@ let valueOfGem;
 let timeleft;
 let gemsNumber;
 let lvl = 1;
+let wonGame = false;
 
-if (lvl === 1) {
-  timeleft = 10;
-  gemsNumber = 4;
-} else if (lvl === 2) {
-  timeleft = 25;
-  gemsNumber = 8;
-} else if (lvl === 3) {
-  timeleft = 20;
-  gemsNumber = 10;
-} else if (lvl === 4) {
-  timeleft = 15;
-  gemsNumber = 12;
-}
+
 
 
 //when the button is clicked, play music
@@ -49,6 +40,22 @@ const myGameArea = {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     myGameArea.points = 0;
+    myGameArea.level = lvl;
+
+    if (lvl === 1) {
+      timeleft = 10;
+      gemsNumber = 4;
+    } else if (lvl === 2) {
+      timeleft = 25;
+      gemsNumber = 8;
+    } else if (lvl === 3) {
+      timeleft = 20;
+      gemsNumber = 10;
+    } else if (lvl === 4) {
+      timeleft = 15;
+      gemsNumber = 12;
+    }
+    
     document.body.appendChild(divElement);
     divElement.appendChild(this.canvas);
 
@@ -155,6 +162,9 @@ class Component {
         if(myGameArea.level > 1) {
           timeleft += 4; 
         }
+        if(myItems.length === 0) {
+          wonGame = true;
+        }
       }
     }
     return crash;
@@ -198,6 +208,8 @@ function updateGameArea() {
   this.createRandomElements(gemsArray);
   //update frames
   myGameArea.frames += 1;
+
+  console.log(wonGame);
   //check if gameover
   gameOver();
   // update and draw the score
@@ -269,15 +281,19 @@ function createRandomElements(gems) {
 }
 
 function gameOver() {
-  //check if win
-  
-  if (timeleft > 0 && (myItems.length === 0)) {
+  //check if win  
+  if (wonGame) {
     myGameArea.stop();
+    console.log(timeleft)
+    console.log("inside condition")
+    clearInterval(this.interval);
     alert("WIN!" + `    Score: ${myGameArea.points}`);
+    wonGame = false;
     levelUp();
   } else if (timeleft === 0) {
     //you loose
     myGameArea.stop();
+    bestScores.push(myGameArea.points);
     alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
   }
   
@@ -287,7 +303,10 @@ function gameOver() {
 function levelUp() {
   //go to next level
   lvl = lvl + 1;
+  myGameArea.clear();
   myGameArea.start();
+  const player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  //INSTANCIATE GEMS HERE
 }
 
 //create player from component class
