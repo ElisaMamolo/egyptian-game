@@ -8,7 +8,7 @@ let valueOfGem;
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
   //myGameArea.music();
-  document.getElementById("startPlaying").remove();
+  document.getElementById("bg").remove();
   //start game area and create canvas when button is clicked
   myGameArea.start();
 });
