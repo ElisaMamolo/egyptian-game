@@ -72,6 +72,17 @@ class Component {
     this.speedX = 0;
     this.speedY = 0;
     this.value = value;
+
+    // Load the image
+    const img = new Image();
+    img.addEventListener('load', () => {
+      // Once image loaded => draw
+      this.img = img;
+      this.draw();
+    });
+    img.src = '/img/anubi.png';
+
+    
   }
 
   newPos() {
@@ -118,7 +129,7 @@ class Component {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
     ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img,this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -220,7 +231,7 @@ function createRandomElements(gems) {
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
-        new Component(20, 20, "blue", randomX, randomY, randomGemValue)
+        new Component(20, 20, randomGems, randomX, randomY, randomGemValue)
       );
     });
   }
