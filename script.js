@@ -7,8 +7,9 @@ let valueOfGem;
 let timeleft;
 let gemsNumber;
 let lvl = 1;
+
 if (lvl === 1) {
-  timeleft = 30;
+  timeleft = 10;
   gemsNumber = 4;
 } else if (lvl === 2) {
   timeleft = 25;
@@ -194,10 +195,10 @@ function updateGameArea() {
   this.createRandomElements(gemsArray);
   //update frames
   myGameArea.frames += 1;
-  // update and draw the score
-  myGameArea.score();
   //check if gameover
   gameOver();
+  // update and draw the score
+  myGameArea.score();
 }
 
 //update speed when arrows are clicked
@@ -266,17 +267,24 @@ function createRandomElements(gems) {
 }
 
 function gameOver() {
-  if (timeleft > 0) {
-
+  //check if win
+  
+  if (timeleft > 0 && (myItems.length === 0)) {
+    myGameArea.stop();
+    alert("WIN!" + `    Score: ${myGameArea.points}`);
+    levelUp();
   } else if (timeleft === 0) {
+    //you loose
     myGameArea.stop();
     alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
   }
   
+  
 }
 
-function setlevel() {
-  
+function levelUp() {
+  //go to next level
+  lvl = lvl + 1;
 }
 
 //create player from component class
