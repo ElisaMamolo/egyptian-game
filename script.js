@@ -1,5 +1,8 @@
 const gemsArray = ["/img/1.gif", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let myItems = [];
+let valueOfGem;
+
 
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
@@ -21,7 +24,7 @@ const myGameArea = {
     this.context = this.canvas.getContext("2d");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-
+    myGameArea.points = 0;
     document.body.appendChild(divElement);
     divElement.appendChild(this.canvas);
 
@@ -40,11 +43,12 @@ const myGameArea = {
     audio.play();
   },
   score: function () {
-    let points = Math.floor(this.frames / 5);
-    myGameArea.points = points;
+    //let points = Math.floor(this.frames / 5);
+    
+    //myGameArea.points = 0;
     this.context.font = "25px serif";
     this.context.fillStyle = "black";
-    this.context.fillText(`Score: ${points}`, 350, 50);
+    this.context.fillText(`Score: ${myGameArea.points}`, 350, 50);
   },
   clear: function () {
     //get context and clear canvas
@@ -57,7 +61,7 @@ const myGameArea = {
 
 //create components, for our player element, and for the obstacles
 class Component {
-  constructor(width, height, color,  x, y) {
+  constructor(width, height, color,  x, y, value) {
     this.width = width;
     this.height = height;
     this.x = x;
@@ -65,6 +69,7 @@ class Component {
     this.color = color;
     this.speedX = 0;
     this.speedY = 0;
+    this.value = value;
   }
 
   newPos() {
@@ -72,6 +77,43 @@ class Component {
     this.x += this.speedX;
     this.y += this.speedY;
   }
+
+  crashWith(myItems) {
+    var myleft = this.x;
+    var myright = this.x + (this.width);
+    var mytop = this.y;
+    var mybottom = this.y + (this.height);
+
+    for (let i = 0; i < myItems.length; i++) {
+      
+        var otherleft = myItems[i].x;
+        var otherright = myItems[i].x + (myItems[i].width);
+        var othertop = myItems[i].y;
+        var otherbottom = myItems[i].y + (myItems[i].height);
+        var crash = true;
+        
+        //context.clearRect(20, 20, element.x, element.y); 
+        
+        
+      if ((mybottom < othertop) ||
+        (mytop > otherbottom) ||
+        (myright < otherleft) ||
+        (myleft > otherright)) {
+          crash = false;
+        }
+      if (crash) {
+        //update score on each crash
+        
+        myGameArea.points += myItems[i].value[0];
+        //remove item from array and canvas
+        myItems.splice(i, 1);
+      } 
+      }
+      return crash;
+    }
+    
+    
+  
 
   update() {
     //take x,y, width and heigh and create whatever is in x and y
@@ -96,6 +138,10 @@ class Component {
 
 //this gets called every 20 milliseconds
 function updateGameArea() {
+  if (player.crashWith(myItems)) {
+    //myGameArea.points = valueOfGem[0];
+    myGameArea.clear();
+  }
   //clear game area
   myGameArea.clear();
   //give new position to the player
@@ -107,10 +153,9 @@ function updateGameArea() {
   this.createRandomElements(gemsArray);
   //update frames
   myGameArea.frames += 1;
-  //check if game over
-  checkGameOver();
   // update and draw the score
   myGameArea.score();
+  
 }
 
 //update speed when arrows are clicked
@@ -162,6 +207,10 @@ function createRandomElements(gems) {
     return gems[Math.floor(Math.random() * gems.length)];
   });
 
+  let randomValue = gemsValues.map((value) => {
+    return gemsValues[Math.floor(Math.random() * gemsValues.length)];
+  });
+  let randomGemValue = randomValue.slice(0, 1);
   //get first n number of gems depending on total dictated by level
   let randomGemsSliced = randomGems.slice(0, gemsNumber);
 
@@ -172,19 +221,11 @@ function createRandomElements(gems) {
     let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
     let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
     //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
-    return myItems.push(new Component(20, 20, "blue", randomX, randomY));
+    return myItems.push(new Component(20, 20, "blue", randomX, randomY, randomGemValue));
   });
 }
 }
 
-
-
-function checkGameOver() {
-  /*
-  if gems have been all picked up then game is finished
-  
-  */
-}
 
 function gameOver () {
   myGameArea.stop();
