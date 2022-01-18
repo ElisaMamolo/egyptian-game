@@ -1,4 +1,4 @@
-const gemsArray = ["/img/1.gif", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let myItems = [];
 let valueOfGem;
@@ -63,11 +63,12 @@ const myGameArea = {
 
 //create components, for our player element, and for the obstacles
 class Component {
-  constructor(width, height, color, x, y, value) {
+  constructor(width, height, file, color, x, y, value) {
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
+    this.file = file;
     this.color = color;
     this.speedX = 0;
     this.speedY = 0;
@@ -78,10 +79,10 @@ class Component {
     img.addEventListener('load', () => {
       // Once image loaded => draw
       this.img = img;
-      this.draw();
+      //this.draw();
     });
-    debugger;
-    img.src = '/img/anubi.png';
+    
+    img.src = file;
 
     
   }
@@ -232,7 +233,7 @@ function createRandomElements(gems) {
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
-        new Component(20, 20, randomGemsSliced[i], randomX, randomY, randomGemValue)
+        new Component(20, 20, randomGemsSliced[i], "yellow",randomX, randomY, randomGemValue)
       );
     });
   }
@@ -244,7 +245,7 @@ function gameOver() {
 }
 
 //create player from component class
-const player = new Component(60, 60, "red", 200, 200);
+const player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
