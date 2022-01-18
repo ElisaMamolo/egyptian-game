@@ -26,13 +26,14 @@ const myGameArea = {
     divElement.appendChild(this.canvas);
 
     // Paint the canvas black.
-    this.context.fillStyle = "#000";
+    //this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
+    //add gems and torches
+    createRandomElements(gemsArray);
     this.interval = setInterval(updateGameArea, 10);
     //TODO: change the timeout dynamically based on level
-    let scoreInterval = setTimeout(gameOver, 2000);
+    let scoreInterval = setTimeout(gameOver, 200000);
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -42,7 +43,7 @@ const myGameArea = {
     let points = Math.floor(this.frames / 5);
     myGameArea.points = points;
     this.context.font = "25px serif";
-    this.context.fillStyle = "white";
+    this.context.fillStyle = "black";
     this.context.fillText(`Score: ${points}`, 350, 50);
   },
   clear: function () {
@@ -56,12 +57,12 @@ const myGameArea = {
 
 //create components, for our player element, and for the obstacles
 class Component {
-  constructor(width, height, x, y) {
+  constructor(width, height, color,  x, y) {
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
-
+    this.color = color;
     this.speedX = 0;
     this.speedY = 0;
   }
@@ -70,6 +71,13 @@ class Component {
     //give player a new position based on the speed
     this.x += this.speedX;
     this.y += this.speedY;
+  }
+
+  update() {
+    //take x,y, width and heigh and create whatever is in x and y
+    const ctx = myGameArea.context;
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -88,13 +96,15 @@ class Component {
 
 //this gets called every 20 milliseconds
 function updateGameArea() {
+  //clear game area
+  myGameArea.clear();
   //give new position to the player
   //update x and y with the speed
   player.newPos();
-
+  
+  player.update();
   //update frames
   myGameArea.frames += 1;
-  //check if game over
   //check if game over
   checkGameOver();
   // update and draw the score
@@ -145,18 +155,16 @@ function createRandomElements(gems) {
   //get first n number of gems depending on total dictated by level
   let randomGemsSliced = randomGems.slice(0, gemsNumber);
 
-  //get random x and y withing canvas width and height
-  let randomX = Math.floor(Math.random() * (window.width - 0 + 1)) + 0;
-  let randomY = Math.floor(Math.random() * (window.height - 0 + 1)) + 0;
+ 
 
   //generate a new instance of component with newly created random values
   //generate gems and defenders
 
   let generateGems = randomGemsSliced.map((item) => {
-    myItems
-      .push
-      //new Component(20, 20, randomGemsSliced[item], randomX, randomY)
-      ();
+     //get random x and y withing canvas width and height
+    let randomX = Math.floor(Math.random() * (window.width - 0 + 1)) + 0;
+    let randomY = Math.floor(Math.random() * (window.height - 0 + 1)) + 0;
+    myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
   });
 }
 
@@ -164,13 +172,8 @@ function createRandomElements(gems) {
 
 function checkGameOver() {
   /*
-  const crashed = myObstacles.some(function (obstacle) {
-    return player.crashWith(obstacle);
-  });
-
-  if (crashed) {
-    myGameArea.stop();
-  }
+  if gems have been all picked up then game is finished
+  
   */
 }
 
@@ -180,8 +183,10 @@ function gameOver () {
 }
 
 //create player from component class
-const player = new Component(20, 20, 500, 500);
+const player = new Component(20, 20, "red", 200, 200);
 
+/* TEMPORARLY COMMENT OUT FLAME
+TODO: remove comments
 document.addEventListener("keydown", function (event) {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
@@ -301,13 +306,14 @@ document.addEventListener("keydown", function (event) {
 
   setInterval(draw, 33);
 
-  /****************************TORCH LIGHT*********************************/
+
 
   $(function () {
     $(".torch").click(function () {
       $(".torch").addClass(".torch .after-click");
     });
   });
+  
 });
 
-
+*/
