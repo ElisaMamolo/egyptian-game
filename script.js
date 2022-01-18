@@ -30,7 +30,7 @@ const myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     //add gems and torches
-    createRandomElements(gemsArray);
+    //createRandomElements(gemsArray);
     this.interval = setInterval(updateGameArea, 10);
     //TODO: change the timeout dynamically based on level
     let scoreInterval = setTimeout(gameOver, 200000);
@@ -103,6 +103,8 @@ function updateGameArea() {
   player.newPos();
   
   player.update();
+
+  this.createRandomElements(gemsArray);
   //update frames
   myGameArea.frames += 1;
   //check if game over
@@ -141,6 +143,14 @@ document.addEventListener("keyup", (e) => {
 //do some refactoring for it later
 //arrayEnemies
 function createRandomElements(gems) {
+  for (i = 0; i < myItems.length; i++) {
+    myItems[i].update();
+  }
+  if (myGameArea.frames === 0) {
+    //This condition will determine every how many update we create new obstacles.
+    //We set every 120 updates, that means 2.4 seconds,
+    //because we call the updateGameArea() function every 20 milliseconds.
+
   //depending on the level define number of gems
   //TODO: change this as hardcoded now -total gems number depending on theme
 
@@ -155,17 +165,16 @@ function createRandomElements(gems) {
   //get first n number of gems depending on total dictated by level
   let randomGemsSliced = randomGems.slice(0, gemsNumber);
 
- 
-
   //generate a new instance of component with newly created random values
-  //generate gems and defenders
 
   let generateGems = randomGemsSliced.map((item) => {
      //get random x and y withing canvas width and height
-    let randomX = Math.floor(Math.random() * (window.width - 0 + 1)) + 0;
-    let randomY = Math.floor(Math.random() * (window.height - 0 + 1)) + 0;
-    myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
+    let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
+    let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
+    //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
+    return myItems.push(new Component(20, 20, "blue", randomX, randomY));
   });
+}
 }
 
 
