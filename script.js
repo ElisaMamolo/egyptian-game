@@ -3,6 +3,25 @@ const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let myItems = [];
 let valueOfGem;
 
+//levels and timing
+let timeleft;
+let gemsNumber;
+let lvl = 1;
+if (lvl === 1) {
+  timeleft = 30;
+  gemsNumber = 4;
+} else if (lvl === 2) {
+  timeleft = 25;
+  gemsNumber = 8;
+} else if (lvl === 3) {
+  timeleft = 20;
+  gemsNumber = 10;
+} else if (lvl === 4) {
+  timeleft = 15;
+  gemsNumber = 12;
+}
+
+
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
@@ -16,6 +35,7 @@ const myGameArea = {
   canvas: document.createElement("canvas"),
   //track how many times the canvas is updated
   frames: 0,
+  time: timeleft,
   start: function () {
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
@@ -38,7 +58,15 @@ const myGameArea = {
     //createRandomElements(gemsArray);
     this.interval = setInterval(updateGameArea, 10);
     //TODO: change the timeout dynamically based on level
-    let scoreInterval = setTimeout(gameOver, 200000);
+    let downloadTimer = setInterval(function(){
+      if(timeleft <= 0){
+        clearInterval(downloadTimer);
+      }
+      myGameArea.time = timeleft;
+      timeleft -= 1;
+      
+    }, 1000);
+
   },
   music: function () {
     var audio = new Audio("theme_song.mp3");
@@ -51,6 +79,7 @@ const myGameArea = {
     this.context.font = "25px serif";
     this.context.fillStyle = "black";
     this.context.fillText(`Score: ${myGameArea.points}`, 350, 50);
+    this.context.fillText(`Time left: ${myGameArea.time} seconds`, 500, 50);
   },
   clear: function () {
     //get context and clear canvas
@@ -167,6 +196,8 @@ function updateGameArea() {
   myGameArea.frames += 1;
   // update and draw the score
   myGameArea.score();
+  //check if gameover
+  gameOver();
 }
 
 //update speed when arrows are clicked
@@ -206,11 +237,6 @@ function createRandomElements(gems) {
     //This condition will determine every how many update we create new obstacles.
     //We set every 120 updates, that means 2.4 seconds,
     //because we call the updateGameArea() function every 20 milliseconds.
-
-    //depending on the level define number of gems
-    //TODO: change this as hardcoded now -total gems number depending on theme
-
-    let gemsNumber = 2;
     let torchNumber = 3;
 
     //get random images from image list/array
@@ -240,8 +266,17 @@ function createRandomElements(gems) {
 }
 
 function gameOver() {
-  myGameArea.stop();
-  alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
+  if (timeleft > 0) {
+
+  } else if (timeleft === 0) {
+    myGameArea.stop();
+    alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
+  }
+  
+}
+
+function setlevel() {
+  
 }
 
 //create player from component class
