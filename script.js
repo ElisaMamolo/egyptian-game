@@ -80,6 +80,7 @@ class Component {
       this.img = img;
       this.draw();
     });
+    debugger;
     img.src = '/img/anubi.png';
 
     
@@ -231,7 +232,7 @@ function createRandomElements(gems) {
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
-        new Component(20, 20, randomGems, randomX, randomY, randomGemValue)
+        new Component(20, 20, randomGemsSliced[i], randomX, randomY, randomGemValue)
       );
     });
   }
@@ -243,7 +244,7 @@ function gameOver() {
 }
 
 //create player from component class
-const player = new Component(20, 20, "red", 200, 200);
+const player = new Component(60, 60, "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
