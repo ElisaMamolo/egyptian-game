@@ -37,6 +37,7 @@ const myGameArea = {
   //track how many times the canvas is updated
   frames: 0,
   time: timeleft,
+  level: lvl,
   start: function () {
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
@@ -79,8 +80,10 @@ const myGameArea = {
     //myGameArea.points = 0;
     this.context.font = "25px serif";
     this.context.fillStyle = "black";
+    this.context.fillText(`Level: ${myGameArea.level}`, 190, 50);
     this.context.fillText(`Score: ${myGameArea.points}`, 350, 50);
     this.context.fillText(`Time left: ${myGameArea.time} seconds`, 500, 50);
+    
   },
   clear: function () {
     //get context and clear canvas
@@ -285,6 +288,7 @@ function gameOver() {
 function levelUp() {
   //go to next level
   lvl = lvl + 1;
+  myGameArea.start();
 }
 
 //create player from component class
