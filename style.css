@@ -71,3 +71,25 @@ canvas{
   border:5px solid #444;
   border-radius:7px;
 }
+
+#instruction{
+  position:fixed;
+  padding: 10px;
+  height: 40%;
+  width:  50vh;
+  color: white;
+  text-align: center;
+  font: 25px    Helvetica, Arial, sans-serif;
+  background-color: #e8b75c;
+  border: 1px solid black;  
+  border-radius: 5px;
+  top:   +20px;
+  left:  -422px;
+  z-index: 1;
+  transition: all 0.5s;
+  margin: 0px;
+
+}
+.shiftIn {
+   transform: translateX(var(--centerIt));
+}

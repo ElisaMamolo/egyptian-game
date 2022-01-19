@@ -19,12 +19,30 @@ let player;
 
 var audio = new Audio("theme_song.mp3");
 
+$(document).ready(function() {
+  setTimeout(() => {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    // console.log(`width ${windowWidth}  height ${ windowHeight } `);
+
+    const instruction = document.getElementById("instruction");
+    const divWidth = instruction.offsetWidth;
+    const centerIt = (windowWidth - divWidth) / 2;
+    // console.log(`div width is ${divWidth} `);
+
+    // set css centreIt variable
+    instruction.className += " shiftIn";
+    instruction.style.setProperty("--centerIt", divWidth + centerIt + "px");
+    // console.log(`centerIt ${centerIt}`);
+  }, 500);
+});
+
 
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
   myGameArea.music();
-  document.getElementById("bg").remove();
+  document.getElementById("instruction").style.setProperty("display", "none");
   //start game area and create canvas when button is clicked
   myGameArea.start();
 });
