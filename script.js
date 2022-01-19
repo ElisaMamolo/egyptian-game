@@ -17,13 +17,13 @@ let wonGame = false;
 
 let player;
 
-
+var audio = new Audio("theme_song.mp3");
 
 
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
-  //myGameArea.music();
+  myGameArea.music();
   document.getElementById("bg").remove();
   //start game area and create canvas when button is clicked
   myGameArea.start();
@@ -88,9 +88,13 @@ const myGameArea = {
     }, 1000);
 
   },
-  music: function () {
-    var audio = new Audio("theme_song.mp3");
-    audio.play();
+  music: function (param) {
+    if(param) {
+      audio.muted = true;
+    } else {
+      audio.play();
+    }
+    
   },
   score: function () {
     this.context.font = "20px serif";
@@ -303,6 +307,7 @@ function gameOver() {
   } else if (timeleft === 0) {
     //you loose
     myGameArea.stop();
+    myGameArea.music(true);
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
     alert("Game Over! Time is up" + `  Score: ${myGameArea.points}`);
