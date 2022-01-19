@@ -276,14 +276,13 @@ function createRandomElements(gems, levelup) {
     let randomGemsSliced = randomGems.slice(0, gemsNumber);
 
     //generate a new instance of component with newly created random values
-
     let generateGems = randomGemsSliced.map((item) => {
       //get random x and y withing canvas width and height
       let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
-        new Component(20, 20, randomGemsSliced[i], "yellow",randomX, randomY, randomGemValue)
+        new Component(20, 20, item, "yellow",randomX, randomY, randomGemValue)
       );
     });
   }
@@ -316,6 +315,7 @@ function levelUp() {
   myGameArea.clear();
   myGameArea.start();
   player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  //create instance of gems
   createRandomElements(gemsArray, true);
 }
 
