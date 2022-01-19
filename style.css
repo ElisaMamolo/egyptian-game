@@ -36,7 +36,7 @@ background: transparent;
 
 /*landing page gif bg*/
 .container-fluid {
-  background-image:url('/img/myBackground.gif'); 
+  background-image:url('/img/gif1.gif'); 
   background-repeat:repeat;
   height: 100vh;
 }
@@ -55,7 +55,7 @@ p {
 /*gamearea background*/
 
 html { 
-  background: url('img/gamearea.png') no-repeat center center fixed; 
+  background: url('img/pixel-bg.png') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -64,14 +64,14 @@ html {
 
 /*canvas color*/
 canvas{
-  background-color: white;
+  background: url('img/background-canvas.png');
+  width: 100vh;
   position:absolute;
   top:0;
   left:0;
   right:0;
   bottom:0;
   margin:auto;
-  
   border:5px solid #444;
   border-radius:7px;
 }
