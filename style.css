@@ -34,24 +34,6 @@ background: transparent;
 
 /*****styling visulas****/
 
-/*landing page gif bg*/
-.container-fluid {
-  background-image:url('/img/myBackground.gif'); 
-  background-repeat:repeat;
-  height: 100vh;
-}
-
-/*game text div and p*/
-p {
-  color: white;
-  font-size: 20px;
-}
-
-.container {
-  background-color: #be6530;
-  height: 300px;
-}
-
 /*gamearea background class on body*/
 html {
   background-image:url('/img/gif1.gif');
