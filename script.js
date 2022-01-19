@@ -5,6 +5,8 @@ let bestScores = [];
 let myItems = [];
 let valueOfGem;
 
+let framesNumber;
+
 //levels and timing
 let timeleft;
 let gemsNumber;
@@ -43,6 +45,7 @@ const myGameArea = {
     this.canvas.height = 700;
     myGameArea.points = 0;
     myGameArea.level = lvl;
+    
 
     if (lvl === 1) {
       timeleft = 10;
@@ -65,6 +68,7 @@ const myGameArea = {
     //this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    
     //add gems and torches
     console.log("start" + player.x, player.y);
     //createRandomElements(gemsArray);
@@ -248,11 +252,11 @@ document.addEventListener("keyup", (e) => {
 //TODO: this can be reused also for generating enemies
 //do some refactoring for it later
 //arrayEnemies
-function createRandomElements(gems) {
+function createRandomElements(gems, levelup) {
   for (i = 0; i < myItems.length; i++) {
     myItems[i].update();
   }
-  if (myGameArea.frames === 0) {
+  if (myGameArea.frames === 0 || levelup === true) {
     //This condition will determine every how many update we create new obstacles.
     //We set every 120 updates, that means 2.4 seconds,
     //because we call the updateGameArea() function every 20 milliseconds.
@@ -306,10 +310,8 @@ function levelUp() {
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
-  
   player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
-  console.log("levelup 200" + player.x, player.y);
-  //INSTANCIATE GEMS HERE
+  createRandomElements(gemsArray, true);
 }
 
 //create player from component class
