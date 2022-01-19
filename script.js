@@ -11,6 +11,8 @@ let gemsNumber;
 let lvl = 1;
 let wonGame = false;
 
+let player;
+
 
 
 
@@ -37,8 +39,8 @@ const myGameArea = {
       "canvas d-flex flex-column align-items-center justify-content-center"
     );
     this.context = this.canvas.getContext("2d");
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.width = 900;
+    this.canvas.height = 700;
     myGameArea.points = 0;
     myGameArea.level = lvl;
 
@@ -64,6 +66,7 @@ const myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     //add gems and torches
+    console.log("start" + player.x, player.y);
     //createRandomElements(gemsArray);
     this.interval = setInterval(updateGameArea, 10);
     //TODO: change the timeout dynamically based on level
@@ -159,7 +162,7 @@ class Component {
         //remove item from array and canvas
         myItems.splice(i, 1);
         //add time for each grabbed gem
-        if(myGameArea.level > 1) {
+        if(myGameArea.level === 1) {
           timeleft += 4; 
         }
         if(myItems.length === 0) {
@@ -220,16 +223,16 @@ function updateGameArea() {
 document.addEventListener("keydown", (e) => {
   switch (e.keyCode) {
     case 38: // up arrow
-      player.speedY -= 15;
+      player.speedY -= 10;
       break;
     case 40: // down arrow
-      player.speedY += 15;
+      player.speedY += 10;
       break;
     case 37: // left arrow
-      player.speedX -= 15;
+      player.speedX -= 10;
       break;
     case 39: // right arrow
-      player.speedX += 15;
+      player.speedX += 10;
       break;
   }
 });
@@ -294,10 +297,8 @@ function gameOver() {
     //you loose
     myGameArea.stop();
     bestScores.push(myGameArea.points);
-    alert("Game Over! Time is up" + `    Score: ${myGameArea.points}`);
+    alert("Game Over! Time is up" + `  Score: ${myGameArea.points}`);
   }
-  
-  
 }
 
 function levelUp() {
@@ -305,12 +306,14 @@ function levelUp() {
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
-  const player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  
+  player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  console.log("levelup 200" + player.x, player.y);
   //INSTANCIATE GEMS HERE
 }
 
 //create player from component class
-const player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
