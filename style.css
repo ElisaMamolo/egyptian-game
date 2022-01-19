@@ -54,13 +54,13 @@ p {
 
 /*gamearea background class on body*/
 html {
-  background-image:url('/img/background1.jpg');
+  background-image:url('/img/gif1.gif');
   display:flex;
 }
 
 /*canvas color*/
 canvas{
-  background-color: white;
+  background-image:url('/img/background-canvas.png'); 
   position:absolute;
   top:0;
   left:0;

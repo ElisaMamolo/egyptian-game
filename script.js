@@ -1,4 +1,4 @@
-const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif","/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsArray = ["/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png",];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let bestScores = [];
 
@@ -71,11 +71,8 @@ const myGameArea = {
     );
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillRect("/img/1.png",0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
-    //add gems and torches
-    console.log("start" + player.x, player.y);
-    //createRandomElements(gemsArray);
     this.interval = setInterval(updateGameArea, 10);
     //TODO: change the timeout dynamically based on level
     let downloadTimer = setInterval(function(){
@@ -189,7 +186,7 @@ class Component {
     //take x,y, width and heigh and create whatever is in x and y
     const ctx = myGameArea.context;
     ctx.fillStyle = this.color;
-    ctx.drawImage('./img/anubi.png',this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img,this.x, this.y, this.width, this.height);
   }
 
   left() {
@@ -206,7 +203,7 @@ class Component {
   }
 }
 
-//this gets called every 10 milliseconds
+//this gets called every 20 milliseconds
 function updateGameArea() {
   if (player.crashWith(myItems)) {
     //myGameArea.points = valueOfGem[0];
@@ -261,8 +258,6 @@ document.addEventListener("keyup", (e) => {
 //do some refactoring for it later
 //arrayEnemies
 function createRandomElements(gems, levelup) {
-  console.log("gems" +  gems);
-  console.log("first" +  levelup);
   for (i = 0; i < myItems.length; i++) {
     myItems[i].update();
   }
@@ -289,7 +284,6 @@ function createRandomElements(gems, levelup) {
       let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
-      console.log(item);
       return myItems.push(
         new Component(40, 40, item, "yellow",randomX, randomY, randomGemValue)
       );
@@ -329,7 +323,7 @@ function levelUp() {
 }
 
 //create player from component class
-player = new Component(60, 70, '/img/player2.png', "red", 200, 200);
+player = new Component(60, 70, '/img/anubi.png', "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
