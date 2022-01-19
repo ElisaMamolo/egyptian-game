@@ -1,4 +1,4 @@
-const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif","/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsArray = ["/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/scarabeo.png","/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let bestScores = [];
 
@@ -288,7 +288,7 @@ function createRandomElements(gems, levelup) {
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
       //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
-        new Component(20, 20, item, "yellow",randomX, randomY, randomGemValue)
+        new Component(40, 40, item, "yellow",randomX, randomY, randomGemValue)
       );
     });
   }
@@ -320,13 +320,13 @@ function levelUp() {
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
-  player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  player = new Component(60, 70, '/img/anubi.png', "red", 200, 200);
   //create instance of gems
   createRandomElements(gemsArray, true);
 }
 
 //create player from component class
-player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+player = new Component(60, 70, '/img/player2.png', "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
