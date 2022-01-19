@@ -39,8 +39,8 @@ const myGameArea = {
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
     divElement.setAttribute(
-      "style",
-      "canvas d-flex flex-column align-items-center justify-content-center"
+      "class",
+      " d-flex flex-column align-items-center justify-content-center"
     );
     this.context = this.canvas.getContext("2d");
     this.canvas.width = 900;
@@ -65,9 +65,11 @@ const myGameArea = {
     
     document.body.appendChild(divElement);
     divElement.appendChild(this.canvas);
+    document.body.setAttribute(
+      "class",
+      "background"
+    );
 
-    // Paint the canvas black.
-    //this.context.fillStyle = "#000";
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
