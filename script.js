@@ -2,6 +2,8 @@ const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let bestScores = [];
 
+let totalScore = 0;
+
 let myItems = [];
 let valueOfGem;
 
@@ -288,21 +290,24 @@ function createRandomElements(gems, levelup) {
 }
 
 function gameOver() {
-  //check if win  
+  //check if win 
   if (wonGame) {
     myGameArea.stop();
-    console.log(timeleft)
-    console.log("inside condition")
     clearInterval(this.interval);
     alert("WIN!" + `    Score: ${myGameArea.points}`);
+    totalScore = totalScore += myGameArea.points;
+    bestScores.push(totalScore);
     wonGame = false;
+    debugger;
     levelUp();
   } else if (timeleft === 0) {
     //you loose
     myGameArea.stop();
-    bestScores.push(myGameArea.points);
+    totalScore = totalScore += myGameArea.points;
+    bestScores.push(totalScore);
     alert("Game Over! Time is up" + `  Score: ${myGameArea.points}`);
   }
+  
 }
 
 function levelUp() {
