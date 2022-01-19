@@ -53,14 +53,21 @@ p {
 }
 
 /*gamearea background class on body*/
-.background {
+html {
   background-image:url('/img/background1.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center; 
+  display:flex;
 }
 
 /*canvas color*/
 canvas{
   background-color: white;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  
+  border:5px solid #444;
+  border-radius:7px;
 }
