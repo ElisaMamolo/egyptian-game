@@ -1,4 +1,4 @@
-const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif","/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let bestScores = [];
 
@@ -50,17 +50,17 @@ const myGameArea = {
     
 
     if (lvl === 1) {
-      timeleft = 10;
-      gemsNumber = 4;
+      timeleft = 15;
+      gemsNumber = 6;
     } else if (lvl === 2) {
-      timeleft = 25;
-      gemsNumber = 8;
+      timeleft = 15;
+      gemsNumber = 9;
     } else if (lvl === 3) {
-      timeleft = 20;
-      gemsNumber = 10;
+      timeleft = 15;
+      gemsNumber = 13;
     } else if (lvl === 4) {
       timeleft = 15;
-      gemsNumber = 12;
+      gemsNumber = 16;
     }
     
     document.body.appendChild(divElement);
@@ -168,8 +168,8 @@ class Component {
         //remove item from array and canvas
         myItems.splice(i, 1);
         //add time for each grabbed gem
-        if(myGameArea.level === 1) {
-          timeleft += 4; 
+        if(myGameArea.level === 3) {
+          timeleft += 1; 
         }
         if(myItems.length === 0) {
           wonGame = true;
@@ -297,7 +297,6 @@ function gameOver() {
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
     wonGame = false;
-    debugger;
     levelUp();
   } else if (timeleft === 0) {
     //you loose
