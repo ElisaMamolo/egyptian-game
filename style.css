@@ -38,3 +38,14 @@ background: transparent;
   background-repeat:repeat;
   height: 100vh;
 }
+
+
+p {
+  color: white;
+  font-size: 20px;
+}
+
+.container {
+  background-color: #be6530;
+  height: 300px;
+}
