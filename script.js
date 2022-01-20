@@ -23,6 +23,8 @@ let player;
 var audio = new Audio("theme_song.mp3");
 audio.loop = true;
 
+var coinAudio = new Audio("1up.wav");
+
 $(document).ready(function() {
   setTimeout(() => {
     const windowWidth = window.innerWidth;
@@ -194,8 +196,9 @@ class Component {
         crash = false;
       }
       if (crash) {
+        //play sound
+        coinAudio.play();
         //update score on each crash
-
         myGameArea.points += myItems[i].value[0];
         //remove item from array and canvas
         myItems.splice(i, 1);

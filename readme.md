@@ -28,5 +28,6 @@ This project is not finished yet, here is a list of what i would like to improve
 #### Resources
  :boom: This is only an exercise to get better at JS, if any of your content should not be included in this repository, please reach out and it will be removed asap :boom:
 - Music: Egyptian theme https://freesound.org/people/PureDesignGirl/sounds/444668/
+Coin sound https://freesound.org/s/518888/
 - Rules fade in/out logic: https://codepen.io/pborad/pen/qmMmgX
 - Images from shutterstock/other sources
