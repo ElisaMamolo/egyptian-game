@@ -21,6 +21,7 @@ let playerName ="player";
 let player;
 
 var audio = new Audio("theme_song.mp3");
+audio.loop = true;
 
 $(document).ready(function() {
   setTimeout(() => {
@@ -43,7 +44,7 @@ $(document).ready(function() {
 
 //when the button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
-  var context = new AudioContext();
+  
   myGameArea.music();
   playerName = document.getElementById("inputName").value;
   document.getElementById("instruction").style.setProperty("display", "none");
@@ -58,6 +59,7 @@ const myGameArea = {
   time: timeleft,
   level: lvl,
   start: function () {
+    var context = new AudioContext();
     this.canvas.setAttribute("id", "canvas");
     let divElement = document.createElement("div");
     divElement.setAttribute(
@@ -69,6 +71,7 @@ const myGameArea = {
     this.canvas.height = 700;
     myGameArea.points = 0;
     myGameArea.level = lvl;
+    myGameArea.music();
     
 
     if (lvl === 1) {
@@ -111,6 +114,7 @@ const myGameArea = {
     if(param) {
       audio.muted = true;
     } else {
+      audio.muted = false;
       audio.play();
     }
     
@@ -386,15 +390,15 @@ function gameOver() {
       instructions.appendChild(buttonElement);
       buttonElement.addEventListener("click", function () {
         playerName = document.getElementById("inputName").value;
-        debugger;
         var context = new AudioContext();
-        myGameArea.music();
+       
         myGameArea.points = 0;
         lvl = 1;
         document.getElementById("instruction").style.setProperty("display", "none");
         
         //start game area and create canvas when button is clicked
         myGameArea.start();
+        myGameArea.music();
       });
     });
   }
