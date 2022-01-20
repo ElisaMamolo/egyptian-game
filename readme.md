@@ -9,6 +9,7 @@ Each level gems and character gets generated and a countdown starts, the player 
 
 #### Game instructions
 Use the arrows to move around the canvas
+:arrow_up: :arrow_down: :arrow_left: :arrow_right:
 
 
 ##### TODO
