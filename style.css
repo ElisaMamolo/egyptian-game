@@ -63,8 +63,10 @@ canvas{
   text-align: center;
   font: 25px    Helvetica, Arial, sans-serif;
   background-color: #e8b75c;
-  border: 1px solid black;  
-  border-radius: 5px;
+  margin:auto;
+  
+  border:5px solid #444;
+  border-radius:7px;
   top:   +20px;
   left:  -422px;
   z-index: 1;
