@@ -5,7 +5,7 @@ Each level gems and character gets generated and a countdown starts, the player 
 
 
 ### Screenshots
-
+![Screenshot](Capture.PNG)
 
 #### Resources
 
