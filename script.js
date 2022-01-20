@@ -1,7 +1,7 @@
 const gemsArray = ["/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem5.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem5.png"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 const playerImg = ["/img/anubi.png", "/img/ra.png", "/img/phar.png", "/img/cleo.png", "/img/sfinge.png", "/img/cat.png", "/img/cleo2.png"];
-let bestScores = [];
+let lastScores = [];
 
 let totalScore = 0;
 
@@ -327,7 +327,6 @@ function gameOver() {
     myGameArea.stop();
     clearInterval(this.interval);
     totalScore = totalScore + myGameArea.points;
-    bestScores.push(totalScore);
     wonGame = false;
     levelUp();
   } else if (timeleft === 0) {
@@ -335,13 +334,13 @@ function gameOver() {
     myGameArea.stop();
     myGameArea.music(true);
     totalScore = totalScore += myGameArea.points;
-    bestScores.push(totalScore);
+    lastScores.push(totalScore);
     //reset total score
     totalScore = 0;
     let instructions = document.getElementById("instruction");
     instructions.style.removeProperty("display");
-    instructions.innerHTML = "Game Over!           Time is up" 
-    + `Total  Score: ${bestScores[bestScores.length - 1]}`;
+    instructions.innerHTML = "Game Over! Time is up <br>" 
+    + `Total Score:${lastScores[lastScores.length - 1]}<br>`;
     let buttonElement = document.createElement("button");
     buttonElement.setAttribute(
       "class",
@@ -349,7 +348,14 @@ function gameOver() {
     );
     buttonElement.innerHTML = "Restart the game";
     instructions.appendChild(buttonElement);
-    showBestScores();
+    let btnElementNewPlayer = document.createElement("button");
+    btnElementNewPlayer.innerHTML = "New Player";
+    btnElementNewPlayer.setAttribute(
+      "class",
+      "mb-3 mt-5 btn btn-light"
+    );
+    instructions.appendChild(btnElementNewPlayer);
+    showLastScores();
     buttonElement.addEventListener("click", function () {
       var context = new AudioContext();
       myGameArea.music();
@@ -360,19 +366,51 @@ function gameOver() {
       //start game area and create canvas when button is clicked
       myGameArea.start();
     });
+    btnElementNewPlayer.addEventListener("click", function () {
+      
+      document.getElementById("instruction").innerHTML = "";
+      let buttonElement = document.createElement("button");
+      buttonElement.setAttribute(
+      "class",
+      "mb-3 mt-5 btn btn-dark"
+      );
+      buttonElement.setAttribute('id', 'startPlaying');
+      let inputElement = document.createElement("input");
+      inputElement.setAttribute(
+        "class",
+        "mt-4 input"
+        );
+      inputElement.setAttribute('id', 'inputName');
+      document.getElementById("instruction").appendChild(inputElement);
+      buttonElement.innerHTML = "Restart the game";
+      instructions.appendChild(buttonElement);
+      buttonElement.addEventListener("click", function () {
+        playerName = document.getElementById("inputName").value;
+        debugger;
+        var context = new AudioContext();
+        myGameArea.music();
+        myGameArea.points = 0;
+        lvl = 1;
+        document.getElementById("instruction").style.setProperty("display", "none");
+        
+        //start game area and create canvas when button is clicked
+        myGameArea.start();
+      });
+    });
   }
   
 }
 
-function showBestScores() {
+function showLastScores() {
   let instructions = document.getElementById("instruction");
   let scoreTitle = document.createElement("h4");
   scoreTitle.innerHTML = "Last Scores";
   instructions.appendChild(scoreTitle);
-  for (let i = 0; i <= bestScores.length; i++) {
-    if (bestScores[i] != undefined) {
+  //show last 5 scores
+  for (let i = 0; i < 5; i++) {
+    if (lastScores[i] != undefined) {
       let scoreText = document.createElement("p");
-      scoreText.innerHTML = playerName + " : " + bestScores[i];
+      scoreText.innerHTML = playerName + " : " + lastScores[i];
       instructions.appendChild(scoreText);
     }
   }
