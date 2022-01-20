@@ -14,6 +14,7 @@ let timeleft;
 let gemsNumber;
 let lvl = 1;
 let wonGame = false;
+let playerName ="player";
 
 let player;
 
@@ -322,7 +323,7 @@ function gameOver() {
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
     wonGame = false;
-
+    console.log(totalScore + "wongame");
     levelUp();
   } else if (timeleft === 0) {
     //you loose
@@ -340,12 +341,15 @@ function gameOver() {
     );
     buttonElement.innerHTML = "Restart the game";
     instructions.appendChild(buttonElement);
+    console.log(totalScore + "loosegame");
+    showBestScores();
     buttonElement.addEventListener("click", function () {
       var context = new AudioContext();
       myGameArea.music();
       myGameArea.points = 0;
       lvl = 1;
       document.getElementById("instruction").style.setProperty("display", "none");
+      
       //start game area and create canvas when button is clicked
       myGameArea.start();
     });
@@ -353,11 +357,26 @@ function gameOver() {
   
 }
 
+function showBestScores() {
+  let instructions = document.getElementById("instruction");
+  let scoreTitle = document.createElement("h4");
+  scoreTitle.innerHTML = "Best Scores";
+  instructions.appendChild(scoreTitle);
+  for (let i = 0; i <= bestScores.length; i++) {
+    if (bestScores[i] != undefined) {
+      let scoreText = document.createElement("p");
+      scoreText.innerHTML = playerName + " : " + bestScores[i];
+      instructions.appendChild(scoreText);
+    }
+  }
+}
+
 function levelUp() {
   //go to next level
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
+  console.log(totalScore + "lvlup");
   player = new Component(60, 70, '/img/anubi.png', "red", 200, 200);
   //create instance of gems
   createRandomElements(gemsArray, true);
