@@ -4,8 +4,24 @@ Is a canvas game, the objective is collecting all the gems before the time runs 
 Each level gems and character gets generated and a countdown starts, the player must collect all the gems to pass the level before 15 seconds run out.
 
 
-### Screenshots
+### Gameplay Screenshots
 ![Screenshot](Capture.PNG)
+
+#### Game instructions
+Use the arrows to move around the canvas
+
+
+##### TODO
+This project is not finished yet, here is a list of what i would like to improve
+- show only n number of points
+- new player button needs to be fixed
+- add other music
+- add sound when get a gem
+- play music on loop
+- input insert placeholder text
+- player to only be inside canvas
+- torch effect -> https://codepen.io/judyhopps/pen/xXQVbx
+- refactoring
 
 #### Resources
 
