@@ -45,6 +45,7 @@ $(document).ready(function() {
 document.getElementById("startPlaying").addEventListener("click", function () {
   var context = new AudioContext();
   myGameArea.music();
+  playerName = document.getElementById("inputName").value;
   document.getElementById("instruction").style.setProperty("display", "none");
   //start game area and create canvas when button is clicked
   myGameArea.start();
@@ -325,10 +326,9 @@ function gameOver() {
   if (wonGame) {
     myGameArea.stop();
     clearInterval(this.interval);
-    totalScore = totalScore += myGameArea.points;
+    totalScore = totalScore + myGameArea.points;
     bestScores.push(totalScore);
     wonGame = false;
-    console.log(totalScore + "wongame");
     levelUp();
   } else if (timeleft === 0) {
     //you loose
@@ -336,9 +336,12 @@ function gameOver() {
     myGameArea.music(true);
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
+    //reset total score
+    totalScore = 0;
     let instructions = document.getElementById("instruction");
     instructions.style.removeProperty("display");
-    instructions.innerHTML = "Game Over!           Time is up" + `  Score: ${myGameArea.points}`;
+    instructions.innerHTML = "Game Over!           Time is up" 
+    + `Total  Score: ${bestScores[bestScores.length - 1]}`;
     let buttonElement = document.createElement("button");
     buttonElement.setAttribute(
       "class",
@@ -346,7 +349,6 @@ function gameOver() {
     );
     buttonElement.innerHTML = "Restart the game";
     instructions.appendChild(buttonElement);
-    console.log(totalScore + "loosegame");
     showBestScores();
     buttonElement.addEventListener("click", function () {
       var context = new AudioContext();
@@ -365,7 +367,7 @@ function gameOver() {
 function showBestScores() {
   let instructions = document.getElementById("instruction");
   let scoreTitle = document.createElement("h4");
-  scoreTitle.innerHTML = "Best Scores";
+  scoreTitle.innerHTML = "Last Scores";
   instructions.appendChild(scoreTitle);
   for (let i = 0; i <= bestScores.length; i++) {
     if (bestScores[i] != undefined) {
@@ -381,7 +383,6 @@ function levelUp() {
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
-  console.log(totalScore + "lvlup");
   currentPlayer = playerImg[lvl - 1];
   player = new Component(60, 70, currentPlayer, "red", 200, 200);
   //create instance of gems
