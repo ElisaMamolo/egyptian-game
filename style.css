@@ -36,7 +36,7 @@ background: transparent;
 
 /*gamearea background class on body*/
 html {
-  background-image:url('/img/bg-egypt-pixels.png');
+  background-image:url('bg-egypt-pixels.png');
   background-size: cover;
   background-repeat: no-repeat;
   
@@ -46,7 +46,7 @@ html {
 
 /*canvas color*/
 canvas{
-  background-image:url('/img/background-canvas.png'); 
+  background-image:url('background-canvas.png'); 
   position:absolute;
   top:0;
   left:0;

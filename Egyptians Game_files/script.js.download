@@ -1,4 +1,4 @@
-const gemsArray = ["/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif","/img/1.png", "/img/2.gif", "/img/3.gif", "/img/4.gif"];
+const gemsArray = ["1.png", "2.gif", "3.gif", "4.gif","1.png", "2.gif", "3.gif", "4.gif"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 let bestScores = [];
 
@@ -320,13 +320,13 @@ function levelUp() {
   lvl = lvl + 1;
   myGameArea.clear();
   myGameArea.start();
-  player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+  player = new Component(60, 60, 'anubi.png', "red", 200, 200);
   //create instance of gems
   createRandomElements(gemsArray, true);
 }
 
 //create player from component class
-player = new Component(60, 60, '/img/anubi.png', "red", 200, 200);
+player = new Component(60, 60, 'anubi.png', "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments

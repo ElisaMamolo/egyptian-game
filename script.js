@@ -1,6 +1,6 @@
-const gemsArray = ["/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem5.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem5.png"];
+const gemsArray = ["gem1.png", "gem2.png", "gem3.png", "gem5.png", "gem1.png", "gem2.png", "gem3.png", "gem5.png"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
-const playerImg = ["/img/anubi.png", "/img/ra.png", "/img/phar.png", "/img/cleo.png", "/img/sfinge.png", "/img/cat.png", "/img/cleo2.png"];
+const playerImg = ["anubi.png", "ra.png", "phar.png", "cleo.png", "sfinge.png", "cat.png", "cleo2.png"];
 let lastScores = [];
 
 let totalScore = 0;

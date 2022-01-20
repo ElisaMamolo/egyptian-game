@@ -36,7 +36,7 @@ background: transparent;
 
 /*landing page gif bg*/
 .container-fluid {
-  background-image:url('/img/myBackground.gif'); 
+  background-image:url('myBackground.gif'); 
   background-repeat:repeat;
   height: 100vh;
 }
