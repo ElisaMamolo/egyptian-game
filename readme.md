@@ -1,10 +1,10 @@
-## Gems Hunter Game
+### Gems Hunter Game
 
 Is a canvas game, the objective is collecting all the gems before the time runs out.
 Each level gems and character gets generated and a countdown starts, the player must collect all the gems to pass the level before 15 seconds run out.
 
 
-### Gameplay Screenshots
+#### Gameplay Screenshots
 ![Screenshot](Capture.PNG)
 
 #### Game instructions
@@ -13,7 +13,7 @@ Use the arrows to move around the canvas
 Get the :gem:
 
 
-##### TODO
+#### TODO
 This project is not finished yet, here is a list of what i would like to improve
 - show only n number of points
 - new player button needs to be fixed
