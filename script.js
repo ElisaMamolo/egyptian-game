@@ -388,6 +388,7 @@ function gameOver() {
         "mt-4 input"
         );
       inputElement.setAttribute('id', 'inputName');
+      inputElement.value = "Insert player name";
       document.getElementById("instruction").appendChild(inputElement);
       buttonElement.innerHTML = "Restart the game";
       instructions.appendChild(buttonElement);
