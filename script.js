@@ -332,7 +332,23 @@ function gameOver() {
     bestScores.push(totalScore);
     let instructions = document.getElementById("instruction");
     instructions.style.removeProperty("display");
-    instructions.innerHTML = "Game Over! Time is up" + `  Score: ${myGameArea.points}`;
+    instructions.innerHTML = "Game Over!           Time is up" + `  Score: ${myGameArea.points}`;
+    let buttonElement = document.createElement("button");
+    buttonElement.setAttribute(
+      "class",
+      "mb-3 mt-5 btn btn-dark"
+    );
+    buttonElement.innerHTML = "Restart the game";
+    instructions.appendChild(buttonElement);
+    buttonElement.addEventListener("click", function () {
+      var context = new AudioContext();
+      myGameArea.music();
+      myGameArea.points = 0;
+      lvl = 1;
+      document.getElementById("instruction").style.setProperty("display", "none");
+      //start game area and create canvas when button is clicked
+      myGameArea.start();
+    });
   }
   
 }
