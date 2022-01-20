@@ -113,6 +113,9 @@ const myGameArea = {
     
   },
   score: function () {
+    if (myGameArea.time === undefined ) {
+      myGameArea.time = "0";
+    }
     this.context.font = "20px serif";
     this.context.fillStyle = "black";
     this.context.fillText(`Level: ${myGameArea.level}`, 190, 50);
