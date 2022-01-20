@@ -1,5 +1,6 @@
 const gemsArray = ["/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png", "/img/gem1.png", "/img/gem2.png", "/img/gem3.png",];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
+const playerImg = ["/img/anubi.png", "/img/ra.png", "/img/phar.png", "/img/cleo.png", "/img/sfinge.png"];
 let bestScores = [];
 
 let totalScore = 0;
@@ -8,6 +9,7 @@ let myItems = [];
 let valueOfGem;
 
 let framesNumber;
+let currentPlayer = playerImg[0];
 
 //levels and timing
 let timeleft;
@@ -380,13 +382,14 @@ function levelUp() {
   myGameArea.clear();
   myGameArea.start();
   console.log(totalScore + "lvlup");
-  player = new Component(60, 70, '/img/anubi.png', "red", 200, 200);
+  currentPlayer = playerImg[lvl - 1];
+  player = new Component(60, 70, currentPlayer, "red", 200, 200);
   //create instance of gems
   createRandomElements(gemsArray, true);
 }
 
 //create player from component class
-player = new Component(60, 70, '/img/anubi.png', "red", 200, 200);
+player = new Component(60, 70, currentPlayer, "red", 200, 200);
 
 /* TEMPORARLY COMMENT OUT FLAME
 TODO: remove comments
