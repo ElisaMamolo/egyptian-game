@@ -239,7 +239,6 @@ function updateGameArea() {
   //update frames
   myGameArea.frames += 1;
 
-  console.log(wonGame);
   //check if gameover
   gameOver();
   // update and draw the score
@@ -276,9 +275,15 @@ document.addEventListener("keyup", (e) => {
 //do some refactoring for it later
 //arrayEnemies
 function createRandomElements(gems, levelup) {
-  for (i = 0; i < myItems.length; i++) {
-    myItems[i].update();
+ 
+  if (myItems.length > 0) {
+    for (i = 0; i < myItems.length; i++) {
+      if (myItems[i].img != undefined) {
+        myItems[i].update();
+      }
+    }
   }
+
   if (myGameArea.frames === 0 || levelup === true) {
     //This condition will determine every how many update we create new obstacles.
     //We set every 120 updates, that means 2.4 seconds,
@@ -314,10 +319,10 @@ function gameOver() {
   if (wonGame) {
     myGameArea.stop();
     clearInterval(this.interval);
-    alert("WIN!" + `    Score: ${myGameArea.points}`);
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
     wonGame = false;
+
     levelUp();
   } else if (timeleft === 0) {
     //you loose
@@ -325,7 +330,9 @@ function gameOver() {
     myGameArea.music(true);
     totalScore = totalScore += myGameArea.points;
     bestScores.push(totalScore);
-    alert("Game Over! Time is up" + `  Score: ${myGameArea.points}`);
+    let instructions = document.getElementById("instruction");
+    instructions.style.removeProperty("display");
+    instructions.innerHTML = "Game Over! Time is up" + `  Score: ${myGameArea.points}`;
   }
   
 }
