@@ -327,28 +327,40 @@ function gameOver() {
     lastScores.push(totalScore);
     //reset total score
     totalScore = 0;
+    //handle dom
+    //1 create instructions div
     let instructions = document.getElementById("instruction");
     instructions.style.removeProperty("display");
     instructions.innerHTML =
       "Game Over! Time is up <br>" +
       `Total Score:${lastScores[lastScores.length - 1]}<br>`;
+      //2 create startPlaying button
     let buttonElement = document.createElement("button");
     buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
     buttonElement.setAttribute("id", "startPlaying");
     buttonElement.innerHTML = "Restart the game";
+    //3. append startPlaying button to instruction div
     instructions.appendChild(buttonElement);
+
+    //4. create newPlayerButton
     let btnElementNewPlayer = document.createElement("button");
     btnElementNewPlayer.innerHTML = "New Player";
     btnElementNewPlayer.setAttribute("class", "mb-3 mt-5 btn btn-light");
+    btnElementNewPlayer.setAttribute("id", "btnNewPlayer");
+    //5. append newplayer button to div
     instructions.appendChild(btnElementNewPlayer);
+    //6. show last score panel
     showLastScores();
-    document
-      .getElementById("startPlaying")
+
+    //7. get startPlaying and add event listener for restarting the game
+    document.getElementById("startPlaying")
       .addEventListener("click", function () {
         myGameArea.music();
+        //remove instructions div
         document
           .getElementById("instruction")
           .style.setProperty("display", "none");
+        //reset global vars
         lvl= 1;
         myGameArea.points = 0;
         myGameArea.frames = 0;
@@ -356,33 +368,44 @@ function gameOver() {
         //start game area and create canvas when button is clicked
         myGameArea.start();
       });
-    btnElementNewPlayer.addEventListener("click", function () {
-      document.getElementById("instruction").innerHTML = "";
-      let buttonElement = document.createElement("button");
-      buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
-      buttonElement.setAttribute("id", "startPlaying");
-      let inputElement = document.createElement("input");
-      inputElement.setAttribute("class", "mt-4 input");
-      inputElement.setAttribute("id", "inputName");
-      inputElement.value = "Insert player name";
-      document.getElementById("instruction").appendChild(inputElement);
-      buttonElement.innerHTML = "Restart the game";
-      instructions.appendChild(buttonElement);
-      buttonElement.addEventListener("click", function () {
-        playerName = document.getElementById("inputName").value;
-        var context = new AudioContext();
+    //8. when clicking on newPlayer generate dom accordingly
+      document
+        .getElementById("btnNewPlayer")
+        .addEventListener("click", function () {
 
-        myGameArea.points = 0;
-        lvl = 1;
-        document
-          .getElementById("instruction")
-          .style.setProperty("display", "none");
+          //empty instruction div
+          document.getElementById("instruction").innerHTML = "";
+          //recreate startPlaying button
+          let buttonElement = document.createElement("button");
+          buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
+          buttonElement.setAttribute("id", "startPlaying");
+          buttonElement.innerHTML = "Restart the game";
+          //create input element
+          let inputElement = document.createElement("input");
+          inputElement.setAttribute("class", "mt-4 input");
+          inputElement.setAttribute("id", "inputName");
+          inputElement.value = "Insert player name";
+          //append input and button to div
+          instructions.appendChild(inputElement);
+          instructions.appendChild(buttonElement);
 
-        //start game area and create canvas when button is clicked
-        myGameArea.start();
-        myGameArea.music();
-      });
-    });
+          //9. if startPlaying clicked
+          buttonElement.addEventListener("click", function () {
+            playerName = document.getElementById("inputName").value;
+            myGameArea.music();
+            //remove instructions div
+            document
+              .getElementById("instruction")
+              .style.setProperty("display", "none");
+            //reset global vars
+            lvl= 1;
+            myGameArea.points = 0;
+            myGameArea.frames = 0;
+            myItems = [];
+            //start game area and create canvas when button is clicked
+            myGameArea.start();
+          });
+        });
   }
 }
 
