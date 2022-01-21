@@ -1,7 +1,7 @@
 * {
   margin: 0; padding: 0;
 }
-#canvas {
+#canvas-start {
   display: block;
 /*	background: url("../images/background.jpg");*/
 }
@@ -30,7 +30,6 @@ background: radial-gradient(
 .torch .after-click:before{
 background: transparent;
 }
-
 
 /*****styling visulas****/
 
