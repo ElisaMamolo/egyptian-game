@@ -278,7 +278,6 @@ document.addEventListener("keyup", (e) => {
 });
 
 function createRandomElements(gems, levelup) {
- 
   if (myItems.length > 0) {
     for (i = 0; i < myItems.length; i++) {
       if (myItems[i].img != undefined) {
@@ -313,7 +312,7 @@ function createRandomElements(gems, levelup) {
 }
 
 function gameOver() {
-  //check if win 
+  //check if win
   if (wonGame) {
     myGameArea.stop();
     clearInterval(this.interval);
@@ -330,48 +329,41 @@ function gameOver() {
     totalScore = 0;
     let instructions = document.getElementById("instruction");
     instructions.style.removeProperty("display");
-    instructions.innerHTML = "Game Over! Time is up <br>" 
-    + `Total Score:${lastScores[lastScores.length - 1]}<br>`;
+    instructions.innerHTML =
+      "Game Over! Time is up <br>" +
+      `Total Score:${lastScores[lastScores.length - 1]}<br>`;
     let buttonElement = document.createElement("button");
-    buttonElement.setAttribute(
-      "class",
-      "mb-3 mt-5 btn btn-dark"
-    );
+    buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
+    buttonElement.setAttribute("id", "startPlaying");
     buttonElement.innerHTML = "Restart the game";
     instructions.appendChild(buttonElement);
     let btnElementNewPlayer = document.createElement("button");
     btnElementNewPlayer.innerHTML = "New Player";
-    btnElementNewPlayer.setAttribute(
-      "class",
-      "mb-3 mt-5 btn btn-light"
-    );
+    btnElementNewPlayer.setAttribute("class", "mb-3 mt-5 btn btn-light");
     instructions.appendChild(btnElementNewPlayer);
     showLastScores();
-    buttonElement.addEventListener("click", function () {
-      var context = new AudioContext();
-      myGameArea.music();
-      myGameArea.points = 0;
-      lvl = 1;
-      document.getElementById("instruction").style.setProperty("display", "none");
-      
-      //start game area and create canvas when button is clicked
-      myGameArea.start();
-    });
+    document
+      .getElementById("startPlaying")
+      .addEventListener("click", function () {
+        myGameArea.music();
+        document
+          .getElementById("instruction")
+          .style.setProperty("display", "none");
+        lvl= 1;
+        myGameArea.points = 0;
+        myGameArea.frames = 0;
+        myItems = [];
+        //start game area and create canvas when button is clicked
+        myGameArea.start();
+      });
     btnElementNewPlayer.addEventListener("click", function () {
-      
       document.getElementById("instruction").innerHTML = "";
       let buttonElement = document.createElement("button");
-      buttonElement.setAttribute(
-      "class",
-      "mb-3 mt-5 btn btn-dark"
-      );
-      buttonElement.setAttribute('id', 'startPlaying');
+      buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
+      buttonElement.setAttribute("id", "startPlaying");
       let inputElement = document.createElement("input");
-      inputElement.setAttribute(
-        "class",
-        "mt-4 input"
-        );
-      inputElement.setAttribute('id', 'inputName');
+      inputElement.setAttribute("class", "mt-4 input");
+      inputElement.setAttribute("id", "inputName");
       inputElement.value = "Insert player name";
       document.getElementById("instruction").appendChild(inputElement);
       buttonElement.innerHTML = "Restart the game";
@@ -379,18 +371,19 @@ function gameOver() {
       buttonElement.addEventListener("click", function () {
         playerName = document.getElementById("inputName").value;
         var context = new AudioContext();
-       
+
         myGameArea.points = 0;
         lvl = 1;
-        document.getElementById("instruction").style.setProperty("display", "none");
-        
+        document
+          .getElementById("instruction")
+          .style.setProperty("display", "none");
+
         //start game area and create canvas when button is clicked
         myGameArea.start();
         myGameArea.music();
       });
     });
   }
-  
 }
 
 function showLastScores() {
