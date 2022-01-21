@@ -15,8 +15,7 @@ Get the :gem:
 
 #### TODO
 This project is not finished yet, here is a list of what i would like to improve
-- show only n number of best scores
-- new player button needs to be fixed
+- gems value should be random, while now at each gem generation they have the same value
 - add other music
 - player to only be inside canvas
 - torch effect -> https://codepen.io/judyhopps/pen/xXQVbx
