@@ -376,6 +376,11 @@ function gameOver() {
           //empty instruction div
           document.getElementById("instruction").innerHTML = "";
           //recreate startPlaying button
+          let flexDiv =  document.createElement("div");
+          flexDiv.setAttribute(
+            "class", 
+            " d-flex flex-column align-items-center justify-content-center"
+          );
           let buttonElement = document.createElement("button");
           buttonElement.setAttribute("class", "mb-3 mt-5 btn btn-dark");
           buttonElement.setAttribute("id", "startPlaying");
@@ -386,8 +391,9 @@ function gameOver() {
           inputElement.setAttribute("id", "inputName");
           inputElement.value = "Insert player name";
           //append input and button to div
-          instructions.appendChild(inputElement);
-          instructions.appendChild(buttonElement);
+          instructions.appendChild(flexDiv);
+          flexDiv.appendChild(inputElement);
+          flexDiv.appendChild(buttonElement);
 
           //9. if startPlaying clicked
           buttonElement.addEventListener("click", function () {
