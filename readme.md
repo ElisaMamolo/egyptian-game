@@ -15,12 +15,9 @@ Get the :gem:
 
 #### TODO
 This project is not finished yet, here is a list of what i would like to improve
-- show only n number of points
+- show only n number of best scores
 - new player button needs to be fixed
 - add other music
-- add sound when get a gem
-- play music on loop
-- input insert placeholder text
 - player to only be inside canvas
 - torch effect -> https://codepen.io/judyhopps/pen/xXQVbx
 - refactoring
