@@ -1,52 +1,49 @@
+/*Define global variables */
+/*Gems and player*/
 const gemsArray = ["gem1.png", "gem2.png", "gem3.png", "gem5.png", "gem1.png", "gem2.png", "gem3.png", "gem5.png"];
 const gemsValues = [5, 25, 50, 100, 150, 200, 250, 300];
 const playerImg = ["anubi.png", "ra.png", "phar.png", "cleo.png", "sfinge.png", "cat.png", "cleo2.png"];
 let lastScores = [];
-
-let totalScore = 0;
-
 let myItems = [];
 let valueOfGem;
-
-let framesNumber;
+let player;
 let currentPlayer = playerImg[0];
 
-//levels and timing
+/*score*/
+let totalScore = 0;
+
+/*levels and timing*/
 let timeleft;
 let gemsNumber;
 let lvl = 1;
 let wonGame = false;
 let playerName ="player";
+let framesNumber;
 
-let player;
-
+/*audio */
 var audio = new Audio("theme_song.mp3");
 audio.loop = true;
-
 var coinAudio = new Audio("1up.wav");
 
+/* make div instructions flow in with timer when page loads*/
 $(document).ready(function() {
   setTimeout(() => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    // console.log(`width ${windowWidth}  height ${ windowHeight } `);
 
     const instruction = document.getElementById("instruction");
     const divWidth = instruction.offsetWidth;
     const centerIt = (windowWidth - divWidth) / 2;
-    // console.log(`div width is ${divWidth} `);
 
     // set css centreIt variable
     instruction.className += " shiftIn";
     instruction.style.setProperty("--centerIt", divWidth + centerIt + "px");
-    // console.log(`centerIt ${centerIt}`);
   }, 500);
 });
 
 
-//when the button is clicked, play music
+//when the startPlaying button is clicked, play music
 document.getElementById("startPlaying").addEventListener("click", function () {
-  
   myGameArea.music();
   playerName = document.getElementById("inputName").value;
   document.getElementById("instruction").style.setProperty("display", "none");
@@ -54,6 +51,7 @@ document.getElementById("startPlaying").addEventListener("click", function () {
   myGameArea.start();
 });
 
+/*define gamearea */
 const myGameArea = {
   canvas: document.createElement("canvas"),
   //track how many times the canvas is updated
@@ -101,7 +99,7 @@ const myGameArea = {
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
     this.interval = setInterval(updateGameArea, 10);
-    //TODO: change the timeout dynamically based on level
+    //countdown for each level
     let downloadTimer = setInterval(function(){
       if(timeleft <= 0){
         clearInterval(downloadTimer);
@@ -113,6 +111,7 @@ const myGameArea = {
 
   },
   music: function (param) {
+    //if param -> if game stops, stop music
     if(param) {
       audio.muted = true;
     } else {
@@ -158,12 +157,8 @@ class Component {
     img.addEventListener('load', () => {
       // Once image loaded => draw
       this.img = img;
-      //this.draw();
     });
-    
     img.src = file;
-
-    
   }
 
   newPos() {
@@ -244,15 +239,12 @@ function updateGameArea() {
   //clear game area
   myGameArea.clear();
   //give new position to the player
-  //update x and y with the speed
   player.newPos();
-
+  //update x and y with the speed
   player.update();
-
   this.createRandomElements(gemsArray);
   //update frames
   myGameArea.frames += 1;
-
   //check if gameover
   gameOver();
   // update and draw the score
@@ -285,9 +277,6 @@ document.addEventListener("keyup", (e) => {
   player.speedY = 0;
 });
 
-//TODO: this can be reused also for generating enemies
-//do some refactoring for it later
-//arrayEnemies
 function createRandomElements(gems, levelup) {
  
   if (myItems.length > 0) {
@@ -297,12 +286,8 @@ function createRandomElements(gems, levelup) {
       }
     }
   }
-
+  //generate gems at the beginning of game when frames are 0 or if levelup
   if (myGameArea.frames === 0 || levelup === true) {
-    //This condition will determine every how many update we create new obstacles.
-    //We set every 120 updates, that means 2.4 seconds,
-    //because we call the updateGameArea() function every 20 milliseconds.
-
     //get random images from image list/array
     let randomGems = gems.map((image) => {
       return gems[Math.floor(Math.random() * gems.length)];
@@ -320,7 +305,6 @@ function createRandomElements(gems, levelup) {
       //get random x and y withing canvas width and height
       let randomX = Math.floor(Math.random() * (canvas.width - 0 + 1)) + 0;
       let randomY = Math.floor(Math.random() * (canvas.height - 0 + 1)) + 0;
-      //myItems.push(new Component(20, 20, randomGemsSliced[item], randomX, randomY));
       return myItems.push(
         new Component(40, 40, item, "yellow",randomX, randomY, randomGemValue)
       );
@@ -437,136 +421,3 @@ function levelUp() {
 
 //create player from component class
 player = new Component(60, 70, currentPlayer, "red", 200, 200);
-
-/* TEMPORARLY COMMENT OUT FLAME
-TODO: remove comments
-document.addEventListener("keydown", function (event) {
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-
-  //Make the canvas occupy the full page
-  var W = window.innerWidth,
-    H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-
-  var particles = [];
-  var mouse = {};
-
-  //Lets create some particles now
-  var particle_count = 100;
-  for (var i = 0; i < particle_count; i++) {
-    particles.push(new particle());
-  }
-
-  //finally some mouse tracking
-  canvas.addEventListener("keydown", trackPlayer);
-
-  function trackPlayer(e) {
-    //since the canvas = full page the position of the mouse
-    //relative to the document will suffice
-    mouse.x = player.x;
-    mouse.y = player.y;
-  }
-
-  function particle() {
-    //speed, life, location, life, colors
-    //speed.x range = -2.5 to 2.5
-    //speed.y range = -15 to -5 to make it move upwards
-    //lets change the Y speed to make it look like a flame
-    //this speed is for styling the flame
-    this.speed = { x: -2.5 + Math.random() * 5, y: -15 + Math.random() * 10 };
-    //location = mouse coordinates
-    //Now the flame follows the player coordinates
-    if (player.x && player.y) {
-      this.location = { x: player.x, y: player.y };
-    } else {
-      this.location = { x: W / 2, y: H / 2 };
-    }
-    //radius range = 10-30
-    this.radius = 10 + Math.random() * 20;
-    //life range = 20-30
-    this.life = 20 + Math.random() * 10;
-    this.remaining_life = this.life;
-    //colors
-    this.r = 74;
-    this.g = 77;
-    this.b = 84;
-  }
-
-  function draw() {
-    //Painting the canvas black
-    //Time for lighting magic
-    //particles are painted with "lighter"
-    //In the next frame the background is painted normally without blending to the
-    //previous framevar im = new Image();
-
-    ctx.globalCompositeOperation = "source-over";
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, W, H);
-    ctx.globalCompositeOperation = "lighter";
-
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      ctx.beginPath();
-      //changing opacity according to the life.
-      //opacity goes to 0 at the end of life of a particle
-      p.opacity = Math.round((p.remaining_life / p.life) * 100) / 100;
-      //a gradient instead of white fill
-      var gradient = ctx.createRadialGradient(
-        p.location.x,
-        p.location.y,
-        0,
-        p.location.x,
-        p.location.y,
-        p.radius
-      );
-
-      p.r = 255;
-      p.g = 69;
-      p.b = 0;
-      gradient.addColorStop(
-        0,
-        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", " + p.opacity + ")"
-      );
-      gradient.addColorStop(
-        0.2,
-        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", " + p.opacity + ")"
-      );
-      gradient.addColorStop(
-        1,
-        "rgba(" + p.r + ", " + p.g + ", " + p.b + ", 0)"
-      );
-      ctx.fillStyle = gradient;
-      ctx.arc(p.location.x, p.location.y, p.radius, Math.PI * 2, false);
-      ctx.fill();
-
-      //lets move the particles
-      p.remaining_life--;
-      p.radius--;
-      p.location.x += p.speed.x;
-      p.location.y += p.speed.y;
-
-      //regenerate particles
-      if (p.remaining_life < 0 || p.radius < 0) {
-        //a brand new particle replacing the dead one
-        particles[i] = new particle();
-      }
-    }
-
-  }
-
-  setInterval(draw, 33);
-
-
-
-  $(function () {
-    $(".torch").click(function () {
-      $(".torch").addClass(".torch .after-click");
-    });
-  });
-  
-});
-
-*/
