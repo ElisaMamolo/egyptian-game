@@ -324,7 +324,7 @@ function gameOver() {
     myGameArea.stop();
     myGameArea.music(true);
     totalScore = totalScore += myGameArea.points;
-    lastScores.push(totalScore);
+    lastScores.push(playerName + " " + totalScore);
     //reset total score
     totalScore = 0;
     //handle dom
@@ -419,12 +419,13 @@ function showLastScores() {
   let instructions = document.getElementById("instruction");
   let scoreTitle = document.createElement("h4");
   scoreTitle.innerHTML = "Last Scores";
+  
   instructions.appendChild(scoreTitle);
   //show last 5 scores
   for (let i = 0; i < 5; i++) {
     if (lastScores[i] != undefined) {
       let scoreText = document.createElement("p");
-      scoreText.innerHTML = playerName + " : " + lastScores[i];
+      scoreText.innerHTML = lastScores[i];
       instructions.appendChild(scoreText);
     }
   }

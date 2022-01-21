@@ -61,8 +61,8 @@ canvas{
 #instruction{
   position:fixed;
   padding: 10px;
-  height: 40%;
-  width:  50vh;
+  height: 60%;
+  width:  60vh;
   color: white;
   text-align: center;
   font: 25px    Helvetica, Arial, sans-serif;
@@ -77,6 +77,9 @@ canvas{
   transition: all 0.5s;
   margin: 0px;
 
+}
+.instructions-best-scores {
+  height: 50%;
 }
 .shiftIn {
    transform: translateX(var(--centerIt));
